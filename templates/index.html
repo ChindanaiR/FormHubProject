@@ -1,0 +1,29 @@
+<!-- {% extends "auctions/layout.html" %} -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Formhub</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+
+<!-- {% block body %} -->
+    <img src="ads-top.png" style="width: 90rem;">
+
+    <div class="d-flex">
+        <!-- {% for listing in listings %} -->
+            <div class="card mx-2" style="width: 18rem;">
+                <img class="card-img-top" src="{{ listing.url_img }}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ listing.title }}</h5>
+                  <h5 class="current_price">฿{{ listing.current_price }} 🔥</h5>
+                  <p class="card-text">{{ listing.description }}</p>
+                  <a href="{% url 'list' listing.id %}" class="btn btn-secondary">Check This Auction</a>
+                </div>
+              </div>
+        <!-- {% empty %}
+            <li>There is no auctions for now.</li>
+        {% endfor %} -->
+    </div>
+
+<!-- {% endblock %} -->

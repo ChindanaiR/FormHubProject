@@ -1,0 +1,59 @@
+* {
+    /* border: solid red 1px; */
+    box-sizing: border-box;
+    font-family: Helvetica;
+    border-color: red;
+}
+
+nav {
+    background-color: #4CAF50;
+    border-radius: 6px;
+}
+
+.nav-link {
+    background-color: white ;
+    opacity: 0.88;
+    color: #333333;
+    border-radius: 6px;
+    margin: 5px;
+    font-weight: bold;
+  }
+
+.nav-link:hover {
+    /* Optionally, you can change the hover color */
+    box-shadow: 0 0 20px rgba(33,33,33,.2); 
+    color: #333333;
+}
+
+.ads-top {
+    margin: 20px;
+    text-align: center;
+}
+
+.ads-top-img {
+    height: 120px;
+}
+
+.card-text {
+    height: 10rem;
+    overflow-y: auto;
+}
+
+body {
+    margin: 40px;
+}
+
+.containertop {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+.media {
+    margin-top: 60px;
+
+}
+
+
