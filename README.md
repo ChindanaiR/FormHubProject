@@ -6,18 +6,32 @@
 git clone https://github.com/ChindanaiR/FormHubProject.git
 cd FormHubProject
 ```
+
 2. Set up the environment
 ```shell
 python -m venv .venv
 ```
+*For Windows*
+```shell
+python3 -m venv .venv
+```
+*For Mac*
+
 3. activate the virtual environment
 ```shell
 ./.venv/scripts/activate
 ```
+*For Windows*
+```shell
+source ./.venv/bin/activate
+```
+*For Mac*
+
 4. Install the relevant packages
 ```shell
 pip install -r requirements.txt
 ```
+
 5. Run!
 ```shell
 python manage.py runserver
