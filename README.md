@@ -3,8 +3,8 @@
 ### Setting up the project
 1. Clone the repository and change directory into the root of the project
 ```shell
-git clone https://github.com/ChindanaiR/TermProjectProject.git
-cd TermProjectProject
+git clone https://github.com/ChindanaiR/FormHubProject.git
+cd FormHubProject
 ```
 
 2. Set up the environment
