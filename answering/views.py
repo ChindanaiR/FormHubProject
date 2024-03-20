@@ -11,4 +11,4 @@ from .models import *
 
 
 def index(request):
-    return render(request, "authentication/index.html", {})
+    return render(request, "answering/index.html", {})
