@@ -1,9 +1,35 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block body %}
 
 <div class="container">
     <h1>Form Management</h1>
+
+    <div class="design-container">
+        <section class="card p-3 my-3" data-section="1" >
+            <select name="section-type" onchange="test(this)">
+                <option value="checkbox">checkbox</option>
+                <option value="dropdown">Dropdown</option>
+                <option value="radio">radio</option>
+            </select>
+            <div class="display"></div>
+        </section>
+        <section class="card p-3 my-3" data-section="2" >
+            <select name="section-type" onchange="test(this)">
+                <option value="checkbox">checkbox</option>
+                <option value="dropdown">Dropdown</option>
+                <option value="radio">radio</option>
+            </select>
+            <div class="display"></div>
+        </section>
+    </div>
+
+    <button class="add-section">Add Section</button>
+    <button class="save">Save</button>
+
+
 </div>
 
+<script src="{% static 'form_management/main.js' %}"></script>
 {% endblock %}
