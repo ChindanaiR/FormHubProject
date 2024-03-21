@@ -4,13 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
+// ================================= Form Creation =================================
+
 document.querySelector(".add-section").onclick = () => {
     console.log("ADD")
 }
+
 document.querySelector(".save").onclick = () => {
-    console.log("SAVE")
     const design = [];
     const sections = document.querySelectorAll("section");
+
+    // Get the value of each section of the form by its type, then add it to the design array.
     sections.forEach((section, idx) => {
         type = section.querySelector("select").value
         if (type === "dropdown") {
@@ -46,9 +50,8 @@ document.querySelector(".save").onclick = () => {
 
 const designContainer = document.querySelector(".design-container");
 
-const test = (elem) => {
-    console.log(elem.parentNode.dataset.section);
-    console.log(elem.value);
+const selectFormType = (elem) => {
+    // Get the type of the form section.
     type = elem.value;
     displayDiv = elem.parentNode.querySelector(".display");
     if (type == "dropdown") {
@@ -62,13 +65,12 @@ const test = (elem) => {
 
 const dropdownHandler = (elem) => {
 
+    // Initialize drowndown section
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
             <input type="text" class="question" placeholder="Untitled Question">
             <ol class="choices">
-                <li><input type="text" class="choice"></li>
-                <li><input type="text" class="choice"></li>
                 <li><input type="text" class="choice"></li>
             </ol>
             <button class="add-choices">Add choices</button>
@@ -78,6 +80,8 @@ const dropdownHandler = (elem) => {
 }
 
 const checkboxHandler = (elem) => {
+
+    // Initialize checkbox section
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
@@ -108,3 +112,5 @@ const addChoices = (elem) => {
         elem.parentNode.querySelector("div.choices").appendChild(choice)
     }
 }
+
+// =================================================================================
