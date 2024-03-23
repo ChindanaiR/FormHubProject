@@ -5,14 +5,6 @@
     font-family: Helvetica;
 }
 
-/* @media (min-width: 600px) {
-    
-}
-
-@media (max-width: 599px) {
-    
-} */
-
 /* logo */
 .logo {
     color: rgb(255, 255, 255);
@@ -32,6 +24,50 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
+/* ads-top */
 .img-fluid {
     min-height: 80px !important;
+}
+
+/* authentication  */
+#greet {
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 350px;
+}
+
+#greet-text {
+    font-size: 70px; 
+    font-weight: bold;
+}
+
+.login-form {
+    width: 350px;
+    height: auto;
+    background-color: #4CAF50;
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    padding: 30px;
+    display: flex; /* Use Flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: left; /* Center items horizontally */
+    border-radius: 6px;
+    background-color: #F4F4F4;
+}
+
+/* primary buttton */
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active{
+    background-color: #FF3D00;
+    border-color: #ce7c62;
+}
+.btn-primary:hover {
+    background-color: #FF3D00;
+    border-color: #ce7c62;
+    box-shadow: 0px 7px 13px rgba(78, 78, 78, 0.4);
+    color: #fff;
+    transform: translateY(-1.5px);
 }
