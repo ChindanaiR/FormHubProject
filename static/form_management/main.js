@@ -8,6 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.querySelector(".add-section").onclick = () => {
     console.log("ADD")
+    const sectionContainer = document.querySelector(".design-container");
+    const section = document.createElement("section")
+    section.classList.add("card", "p-3", "my-3")
+    section.setAttribute("data-section", sectionContainer.childElementCount + 1)
+    section.innerHTML = `
+        <select name="section-type" onchange="selectFormType(this)">
+            <option value="" disabled selected>Select Section Type</option>    
+            <option value="checkbox">checkbox</option>
+            <option value="dropdown">Dropdown</option>
+            <option value="radio">radio</option>
+        </select>
+        <div class="display"></div>
+    `
+    sectionContainer.appendChild(section)
 }
 
 document.querySelector(".save").onclick = () => {
