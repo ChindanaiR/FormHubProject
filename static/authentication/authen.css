@@ -1,0 +1,27 @@
+/* authentication  */
+#greet {
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 350px;
+}
+
+#greet-text {
+    font-size: 70px; 
+    font-weight: bold;
+}
+
+.login-form {
+    width: 350px;
+    height: auto;
+    background-color: #4CAF50;
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    padding: 30px;
+    display: flex; /* Use Flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: left; /* Center items horizontally */
+    border-radius: 6px;
+    background-color: #F4F4F4;
+}
