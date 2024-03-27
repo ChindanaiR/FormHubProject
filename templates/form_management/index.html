@@ -8,19 +8,16 @@
 
     <div class="design-container">
         <section class="card p-3 my-3" data-section="1" >
-            <select name="section-type" onchange="selectFormType(this)">
+            <select name="section-type" class="form-select" onchange="selectFormType(this)">
                 <option value="" disabled selected>Select Section Type</option>
-                <option value="checkbox">checkbox</option>
+                <option value="checkbox">Checkbox</option>
                 <option value="dropdown">Dropdown</option>
-                <option value="radio">radio</option>
-            </select>
-            <div class="display"></div>
-        </section>
-        <section class="card p-3 my-3" data-section="2" >
-            <select name="section-type" onchange="selectFormType(this)">
-                <option value="checkbox">checkbox</option>
-                <option value="dropdown">Dropdown</option>
-                <option value="radio">radio</option>
+                <option value="radio">Radio</option>
+                <option value="short">Short text</option>
+                <option value="long">Long Text</option>
+                <option value="file">Upload file</option>
+                <option value="date">Date</option>
+                <option value="time">Time</option>
             </select>
             <div class="display"></div>
         </section>

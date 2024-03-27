@@ -25,28 +25,83 @@ def get_form(request):
 			"design": 	[
 							{
 								"section": 1,
-								"type": "dropdown",
-								"question": "This is dropdown question",
+								"type": "checkbox",
+								"question": "Test checkbox",
 								"options": [
-									"first",
-									"second",
-									"third!",
-									"another one"
+									"234567",
+									"rtyuio",
+									"rtyui",
+									"bsdfsdf"
 								]
 							},
 							{
 								"section": 2,
-								"type": "checkbox",
-								"question": "Let's try the checkboxes question",
+								"type": "dropdown",
+								"question": "Test dropdown",
 								"options": [
-									"First choice",
-									"The second",
-									"This is the thied",
-									"how about this",
-									"do you want to try this",
-									"yeeeeee"
+									"12345",
+									"567890",
+									"dfghjkl",
+									"asdas"
 								]
-							}
+							},
+							{
+								"section": 3,
+								"type": "checkbox",
+								"question": "checkbox again",
+								"options": [
+									"23456",
+									"hjkl;",
+									"67890-"
+								]
+							},
+							{
+								"section": 4,
+								"type": "radio",
+								"question": "Test radio",
+								"options": [
+									"asdasd",
+									"adasd",
+									"45678",
+									"tyui"
+								]
+							},
+							{
+								"section": 5,
+								"type": "radio",
+								"question": "Test radio 2",
+								"options": [
+									"12345678",
+									"0987654",
+									"12345678",
+									"09876543"
+								]
+							},
+							{
+								"section": 6,
+								"type": "long",
+								"question": "Test long text",
+							},
+							{
+								"section": 7,
+								"type": "short",
+								"question": "Test short text",
+							},
+							{
+								"section": 8,
+								"type": "file",
+								"question": "Test file upload",
+							},
+							{
+								"section": 9,
+								"type": "date",
+								"question": "Test date",
+							},
+							{
+								"section": 10,
+								"type": "time",
+								"question": "Test time",
+							},
 						]
 		}, status = 201)
 	return JsonResponse({"error": "Something went wrong"}, status = 400)
