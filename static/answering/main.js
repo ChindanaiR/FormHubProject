@@ -5,7 +5,7 @@ const dropdownRender = (parent, section, design) => {
 
     // set initial layout
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <select class="choices form-select">
             <option value="" disabled selected>Select one</option>
         </select>
@@ -29,7 +29,7 @@ const checkboxRender = (parent, section, design) => {
 
     // set initial layout
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="checkboxes"></div>
     `
 
@@ -41,7 +41,7 @@ const checkboxRender = (parent, section, design) => {
         checkbox = document.createElement("input")
         checkbox.setAttribute("type", "checkbox")
         checkbox.setAttribute("name", option)
-        checkbox.classList.add("me-2")
+        checkbox.classList.add("me-2", "form-check-input")
 
         label = document.createElement("label")
         label.innerHTML = option;
@@ -58,7 +58,7 @@ const radioRender = (parent, section, design) => {
 
     // set initial layout
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="radios"></div>
     `
 
@@ -71,7 +71,7 @@ const radioRender = (parent, section, design) => {
         radio.setAttribute("type", "radio")
         radio.setAttribute("name", design.section)
         radio.setAttribute("value", option)
-        radio.classList.add("me-2")
+        radio.classList.add("me-2", "form-check-input")
 
         label = document.createElement("label")
         label.innerHTML = option;
@@ -86,7 +86,7 @@ const radioRender = (parent, section, design) => {
 const shortTextInputRender = (parent, section, design) => {
     console.log("short txt detected")
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="my-2">
             <input type="text" class="answer form-control" />
         </div>
@@ -96,7 +96,7 @@ const shortTextInputRender = (parent, section, design) => {
 const longTextInputRender = (parent, section, design) => {
     console.log("long txt detected")
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="my-2">
             <textarea class="answer form-control" rows="5"></textarea>
         </div>
@@ -106,7 +106,7 @@ const longTextInputRender = (parent, section, design) => {
 const fileInputRender = (parent, section, design) => {
     console.log("file detected")
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="input-group my-3">
             <input type="file" class="form-control answer" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
         </div>
@@ -116,7 +116,7 @@ const fileInputRender = (parent, section, design) => {
 const dateRender = (parent, section, design) => {
     console.log("file detected")
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <input type="date" class="answer my-2 form-control" />
     `
     parent.appendChild(section)
@@ -124,13 +124,13 @@ const dateRender = (parent, section, design) => {
 const timeRender = (parent, section, design) => {
     console.log("file detected")
     section.innerHTML = `
-        <h6 class="question">${design.section}. ${design.question}</h6>
+        <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <input type="time" class="answer my-2 form-control" />
     `
     parent.appendChild(section)
 }
 
-
+// get the particular form
 const getData = () => {
     fetch("/api/get_form_data/", {
         method: "GET",
@@ -140,8 +140,10 @@ const getData = () => {
         const formName = data.formName
         const sections = data.design
 
+        // set form name
         document.querySelector(".form-name").innerHTML = formName;
 
+        // call the rendering function for each type of form
         sections.forEach((sectionDesign, idx) => {
             // get parent form element
             const formDiv = document.querySelector(".form");
@@ -175,7 +177,7 @@ const saveResponse = () => {
     const responses = [];
     document.querySelectorAll(".section").forEach((section) => {
         formType = section.dataset.formtype;
-        const question = /\s(.+)/.exec(section.querySelector(".question").textContent)[1]
+        const question = section.querySelector(".question").dataset.question;
         const sectionNumber = section.dataset.sectionnum;
         if (formType === "dropdown") {
             console.log("DD")
