@@ -6,7 +6,7 @@ const dropdownRender = (parent, section, design) => {
     // set initial layout
     section.innerHTML = `
         <h6 class="question">${design.section}. ${design.question}</h6>
-        <select class="choices form-control">
+        <select class="choices form-select">
             <option value="" disabled selected>Select one</option>
         </select>
     `
@@ -88,7 +88,7 @@ const shortTextInputRender = (parent, section, design) => {
     section.innerHTML = `
         <h6 class="question">${design.section}. ${design.question}</h6>
         <div class="my-2">
-            <input type="text" class="answer" />
+            <input type="text" class="answer form-control" />
         </div>
     `
     parent.appendChild(section)
@@ -98,7 +98,7 @@ const longTextInputRender = (parent, section, design) => {
     section.innerHTML = `
         <h6 class="question">${design.section}. ${design.question}</h6>
         <div class="my-2">
-            <textarea class="answer"></textarea>
+            <textarea class="answer form-control" rows="5"></textarea>
         </div>
     `
     parent.appendChild(section)
@@ -117,7 +117,7 @@ const dateRender = (parent, section, design) => {
     console.log("file detected")
     section.innerHTML = `
         <h6 class="question">${design.section}. ${design.question}</h6>
-        <input type="date" class="answer my-2" />
+        <input type="date" class="answer my-2 form-control" />
     `
     parent.appendChild(section)
 }
@@ -125,7 +125,7 @@ const timeRender = (parent, section, design) => {
     console.log("file detected")
     section.innerHTML = `
         <h6 class="question">${design.section}. ${design.question}</h6>
-        <input type="time" class="answer my-2" />
+        <input type="time" class="answer my-2 form-control" />
     `
     parent.appendChild(section)
 }

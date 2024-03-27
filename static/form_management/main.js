@@ -99,9 +99,9 @@ const dropdownHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
-            <ol class="choices">
-                <li><input type="text" class="choice"></li>
+            <input type="text" class="question form-control" placeholder="Untitled Question">
+            <ol class="choices my-3">
+                <li class="my-1"><input type="text" class="choice"></li>
             </ol>
             <button class="add-choices">Add choices</button>
         </div>
@@ -115,9 +115,9 @@ const checkboxHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
-            <div class="choices">
-                <div>
+            <input type="text" class="question form-control" placeholder="Untitled Question">
+            <div class="choices my-3">
+                <div class="my-1">
                     <input type="checkbox" disabled>
                     <input type="text" class="choice">
                 </div>
@@ -134,9 +134,9 @@ const radioHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
-            <div class="choices">
-                <div>
+            <input type="text" class="question form-control" placeholder="Untitled Question">
+            <div class="choices my-3">
+                <div class="my-1">
                     <input type="radio" disabled>
                     <input type="text" class="choice">
                 </div>
@@ -152,7 +152,7 @@ const shortTextHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
+            <input type="text" class="question form-control" placeholder="Untitled Question">
             <input type="text" class="answer my-2 p-1" disabled/>
         </div>
     `
@@ -163,7 +163,7 @@ const longTextHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
+            <input type="text" class="question form-control" placeholder="Untitled Question">
             <textarea class="answer my-2 p-1" disabled></textarea>
         </div>
     `
@@ -174,7 +174,7 @@ const fileUploadHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-        <input type="text" class="question" placeholder="Untitled Question">
+        <input type="text" class="question form-control" placeholder="Untitled Question">
             <div class="input-group my-3">
                 <input type="file" class="form-control answer" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" disabled>
             </div>
@@ -187,8 +187,8 @@ const dateHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
-            <input type="date" class="answer" />
+            <input type="text" class="question form-control" placeholder="Untitled Question">
+            <input type="date" class="answer form-control my-3" />
         </div>
     `
 }
@@ -198,8 +198,8 @@ const timeHandler = (elem) => {
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
         <div class="card my-2 p-3">
-            <input type="text" class="question" placeholder="Untitled Question">
-            <input type="time" class="answer" />
+            <input type="text" class="question form-control" placeholder="Untitled Question">
+            <input type="time" class="answer form-control my-3" />
         </div>
     `
 }
@@ -209,15 +209,18 @@ const addChoices = (elem) => {
 
     if (type === "dropdown") {
         choice = document.createElement("li")
+        choice.classList.add("my-1")
         choice.innerHTML = `<input type="text" class="choice">`
         elem.parentNode.querySelector("ol").appendChild(choice)
     } else if (type === "checkbox") {
         choice = document.createElement("div")
+        choice.classList.add("my-1")
         choice.innerHTML = `<input type="checkbox" disabled>
                             <input type="text" class="choice">`
         elem.parentNode.querySelector("div.choices").appendChild(choice)
     } else if (type === "radio") {
         choice = document.createElement("div")
+        choice.classList.add("my-1")
         choice.innerHTML = `<input type="radio" disabled>
                             <input type="text" class="choice">`
         elem.parentNode.querySelector("div.choices").appendChild(choice)
