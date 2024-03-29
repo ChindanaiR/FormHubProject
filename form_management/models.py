@@ -6,8 +6,8 @@ class Point(models.Model):
     form_size = models.CharField(max_length = 2)
     point = models.IntegerField()
     description = models.CharField(max_length = 50)
-    lower_bound = models.IntegerField(max_length = 3)
-    upper_bound = models.IntegerField(max_length = 3)
+    lower_bound = models.IntegerField()
+    upper_bound = models.IntegerField()
 
 
 class Category(models.Model):
