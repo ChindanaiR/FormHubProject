@@ -1,9 +1,44 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'userprofile/userprofile.css' %}">
+{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1>User Profile</h1>
+    <div class="row justify-content-center">
+
+        <div class="col-4 container d-flex flex-column justify-content-center align-items-center" id="user-prof">
+            <div>
+                <img id="prof-pic" src="https://pbs.twimg.com/media/EOHvlzOXUAAScN5.jpg">
+            </div>
+            <div>
+                <h2><strong>ComZa555</strong></h2>
+                <h5>Thanathep</h5>
+                <h5>comza555@example.com</h5>
+            </div>
+        </div>
+
+        <div class="col-4" id="basic-point">
+            <div class="mx-1 basic-point-card" id="current-point">
+                <h5 class="head-point">Current Points</h5>
+                <p style="text-align: center;"><strong style="font-size: 30px;">1,250</strong> points</p>
+                <p style="text-align: center;"><a style="color: rgb(124, 124, 124); text-decoration: none;" href="/redeem/">Redeem Points</a></p>
+            </div>
+            <div class="mx-1 basic-point-card" id="your-rank">
+                <h5 class="head-point">Your Rank</h5>
+                <div style="text-align: center; height: 180; width: auto;">
+                    <img style="height: 100px; width: auto;" src="https://icons.iconarchive.com/icons/iconarchive/badge-trophy/512/Badge-Trophy-Emerald-icon.png" alt="rank-pic">
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
 
 {% endblock %}
