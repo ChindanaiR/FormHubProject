@@ -3,4 +3,5 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    pass
+    student_id = models.CharField(max_length = 10, null = True)
+    profile_img = models.ImageField(upload_to="static/userprofile/imgs", null = True)
