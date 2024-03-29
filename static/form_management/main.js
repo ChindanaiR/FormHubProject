@@ -29,9 +29,26 @@ document.querySelector(".add-section").onclick = () => {
     sectionContainer.appendChild(section)
 }
 
+// Bind with the save button
 document.querySelector(".save").onclick = () => {
+    const form = getFormDesign()
+    fetch("api/save_form", {
+        method: "POST",
+        body: JSON.stringify(form)
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response)
+        window.location.replace("/")
+    })
+}
+
+
+const getFormDesign = () => {
     const design = [];
     const sections = document.querySelectorAll("section");
+    const formName = document.querySelector(".form-name").value;
+    const formDescription = document.querySelector(".form-descr").value;
 
     // Get the value of each section of the form by its type, then add it to the design array.
     sections.forEach((section, idx) => {
@@ -61,7 +78,11 @@ document.querySelector(".save").onclick = () => {
             })
         }
     })
-    console.log(design)
+    return {
+        formName: formName,
+        description: formDescription,
+        design: design
+    }
 }
 
 

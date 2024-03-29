@@ -1,3 +1,9 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    getData(window.location.href.split("/").at(-1));
+
+});
+
 // =========================================== Render the form ===========================================
 
 const dropdownRender = (parent, section, design) => {
@@ -131,8 +137,8 @@ const timeRender = (parent, section, design) => {
 }
 
 // get the particular form
-const getData = () => {
-    fetch("/api/get_form_data/", {
+const getData = (formId) => {
+    fetch(`/api/get_form_data/${formId}`, {
         method: "GET",
     })
     .then(response => response.json())
@@ -169,7 +175,6 @@ const getData = () => {
     })
 }
 
-getData() // for testing purpose
 
 // =========================================== Saving response ===========================================
 

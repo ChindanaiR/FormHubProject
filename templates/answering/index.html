@@ -1,22 +1,29 @@
 {% extends "layout.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'answering/index.css' %}">
+{% endblock %}
+
 {% block body %}
 
 <div class="container">
-    <h1>Initialize Main</h1>
+    <h1>All Forms</h1>
 
-    <div class="test">
-        <h2 class="form-name"></h2>
-        <div class="form">
-
-        </div>
+    <div class="all-forms">
+        {% for form in forms %}
+            <div class="card my-3 form" data-code="{{ form.id }}">
+                <div class="card-body">
+                    <h5>{{ form.form_name }}</h5>
+                </div>
+            </div>
+        {% empty %}
+            <h3>No form</h3>
+        {% endfor %}
     </div>
-
-    <button class="btn btn-success" onclick="saveResponse()">Submit</button>
 
 </div>
 
 
-<script src="{% static 'answering/main.js' %}"></script>
+<script src="{% static 'answering/index.js' %}"></script>
 {% endblock %}

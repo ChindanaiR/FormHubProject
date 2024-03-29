@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Initialize Main</h1>
+
+    <div class="test">
+        <h2 class="form-name"></h2>
+        <div class="form">
+
+        </div>
+    </div>
+
+    <button class="btn btn-success" onclick="saveResponse()">Submit</button>
+
+</div>
+
+
+<script src="{% static 'answering/form.js' %}"></script>
+{% endblock %}

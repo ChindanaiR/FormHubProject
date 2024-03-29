@@ -7,6 +7,12 @@
     <h1>Form Management</h1>
 
     <div class="design-container">
+        <div class="form-detail card p-3">
+            <label for="form-name">Form Name:</label>
+            <input type="text" name="form-name" class="form-control mb-2 form-name">
+            <label for="description">Description:</label>
+            <textarea name="description" cols="30" rows="5" class="form-control form-descr"></textarea>
+        </div>
         <section class="card p-3 my-3" data-section="1" >
             <select name="section-type" class="form-select" onchange="selectFormType(this)">
                 <option value="" disabled selected>Select Section Type</option>
