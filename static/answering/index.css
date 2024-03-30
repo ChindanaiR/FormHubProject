@@ -1,0 +1,11 @@
+.all-forms {
+
+    & .form {
+        cursor: pointer;
+    }
+
+    & .form:hover {
+        background-color: lightgrey;
+        transition: .2s;
+    }
+}
