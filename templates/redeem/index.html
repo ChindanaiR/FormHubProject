@@ -1,20 +1,43 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Redeem{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'redeem/redeem.css' %}">
+{% endblock %}
+
 
 {% block body %}
 
-<div class="container">
-    <h1>Redeem</h1>
-</div>
-<div>
-    <div class="list-group">
-        <button type="button" class="list-group-item list-group-item-action active">
-          Cras justo odio
-        </button>
-        <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-        <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-        <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-        <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+<div class="row justify-content-center">
+
+    <div class="col-4 container d-flex flex-column justify-content-center align-items-center" id="user-prof">
+        <div>
+            <img id="prof-pic" src="https://pbs.twimg.com/media/EOHvlzOXUAAScN5.jpg">
+        </div>
+        <div>
+            <h2><strong>ComZa555</strong></h2>
+        </div>
+
+        <div class="container d-flex flex-column justify-content-center align-items-center" id="basic-point">
+            <div class="m-2 basic-point-card" id="current-point">
+                <h5 class="head-point">Current Points</h5>
+                <p style="text-align: center;"><strong style="font-size: 30px;">1,250</strong> points</p>
+            </div>
+            <div class="m-2 basic-point-card" id="your-rank">
+                <h5 class="head-point">Your Rank</h5>
+                <div style="text-align: center; height: 180; width: auto;">
+                    <img style="height: 100px; width: auto;" src="https://icons.iconarchive.com/icons/iconarchive/badge-trophy/512/Badge-Trophy-Emerald-icon.png" alt="rank-pic">
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="col-4" id="redeem-container">
+        <h2>Redeem</h2>
+    </div>
+
 </div>
 
 {% endblock %}

@@ -1,0 +1,61 @@
+/* user info area */
+#user-prof {
+    width: 250px;
+    height: auto;
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    padding: 30px;
+    display: flex; /* Use Flexbox */
+    flex-direction: row; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+    border-radius: 6px;
+}
+
+#prof-pic {
+    border-radius: 50%; 
+    width: 200px; 
+    height: 200px;
+    margin-bottom:20px;
+}
+
+/* basic-info */
+#basic-point {
+    width: 400px;
+    height: auto;
+    margin: 20px; /* This centers the element both horizontally and vertically */
+    padding: 10px;
+    display: flex; /* Use Flexbox */
+    flex-direction: row; /*  Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+    border-radius: 6px;
+}
+
+.basic-point-card {
+    width: 250px;
+    height: auto;
+    border-radius: 6px;
+    background-color: #F4F4F4;
+    padding: 6px;
+}
+
+.head-point {
+    background-color: #4CAF50;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+
+/* redeem area */
+#redeem-container {
+    width: 700px;
+    height: auto;
+    margin: 20px;
+    padding: 10px;
+    display: flex; /* Use Flexbox */
+    flex-direction: row; /*  Arrange items vertically */
+    align-items: flex-start; /* Center items horizontally */
+    border-radius: 6px;
+    background-color: #F4F4F4;
+}

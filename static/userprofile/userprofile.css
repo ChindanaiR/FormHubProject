@@ -1,12 +1,9 @@
 #user-prof {
     width: 250px;
     height: auto;
-    margin: 20px; /* This centers the element both horizontally and vertically */
-    padding: 30px;
     display: flex; /* Use Flexbox */
     flex-direction: row; /* Arrange items vertically */
     align-items: center; /* Center items horizontally */
-    border-radius: 6px;
 }
 
 #prof-pic {
@@ -16,31 +13,24 @@
     margin-bottom:20px;
 }
 
-/* basic-info */
-#basic-point {
-    width: 400px;
-    height: auto;
-    margin: 20px; /* This centers the element both horizontally and vertically */
-    padding: 10px;
+#user-prof-forms {
+    margin: 20px;
+    padding: 20px;
     display: flex; /* Use Flexbox */
     flex-direction: row; /*  Arrange items vertically */
-    align-items: center; /* Center items horizontally */
-    border-radius: 6px;
-}
-
-.basic-point-card {
-    width: 250px;
-    height: auto;
+    align-items: flex-start; /* Center items horizontally */
     border-radius: 6px;
     background-color: #F4F4F4;
-    padding: 6px;
 }
 
-.head-point {
-    background-color: #4CAF50;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 6px;
+#rank-pic {
+    position: relative;
+    top: 50px;
+    left: 65px;
+}
+
+.basic-info {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; 
+    margin-bottom: 3px;
 }
