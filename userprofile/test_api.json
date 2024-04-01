@@ -1,0 +1,18 @@
+{
+    "users": [
+      { 
+        "id": 1 ,
+        "acct_name": "test1",
+        "user_name": "name1",
+        "email": "mail1",
+        "image": "eiei1"
+      },
+      {
+        "id": 2 ,
+        "acct_name": "test2",
+        "user_name": "name2",
+        "email": "mail2",
+        "image": "eiei2"
+      }
+    ]
+  }
