@@ -138,7 +138,7 @@ const timeRender = (parent, section, design) => {
 
 // get the particular form
 const getData = (formId) => {
-    fetch(`/api/get_form_data/${formId}`, {
+    fetch(`/get_form_data/${formId}`, {
         method: "GET",
     })
     .then(response => response.json())

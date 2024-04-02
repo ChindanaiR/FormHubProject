@@ -75,7 +75,13 @@ def register(request):
         except IntegrityError as e:
             print(e)
             return render(request, "authentication/register.html", {
-                "message": "Email address already taken."
+                "message": "Email address already taken.",
+                "first_name": first_name,
+                "last_name": last_name,
+                "username": username,
+                "email": email,
+                "student_id": student_id,
+                "password": password,
             })
         finally:
             login(request, user)

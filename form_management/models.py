@@ -10,7 +10,7 @@ class Point(models.Model):
     upper_bound = models.IntegerField()
 
     def __str__(self):
-        return f"Form Size: {self.form_size} ({self.lower_bound} - {self.upper_bound})"
+        return f"{self.point}"
 
 
 class Category(models.Model):
@@ -23,7 +23,7 @@ class Category(models.Model):
 class Form(models.Model):
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     form_name = models.CharField(max_length = 125)
-    description = models.CharField(max_length = 450)
+    description = models.CharField(max_length = 1000)
     category = models.ForeignKey(Category, on_delete = models.CASCADE, null = True)
     design = models.JSONField()
     creation_timestamp = models.DateTimeField(auto_now_add = True)
