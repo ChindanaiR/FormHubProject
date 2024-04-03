@@ -6,7 +6,7 @@
 .all-forms {
 
     & .form {
-        /* width: 16rem; */
+        width: 16rem;
         height: 20rem;
         cursor: pointer;
         background-color: var(--main-bg);
