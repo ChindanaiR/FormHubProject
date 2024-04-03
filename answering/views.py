@@ -42,7 +42,7 @@ def get_form(request, form_id):
 			"formName": form.form_name,
 			"description": form.description,
 			"design": form.design,
-		})
+		}, status = 201)
 
 		# return JsonResponse({
 		# 	"formName": "Trying a rendering logic",

@@ -1,19 +1,29 @@
 {% extends "layout.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'answering/form.css' %}">
+{% endblock %}
+
 {% block body %}
 
 <div class="container">
-    <h1>Initialize Main</h1>
 
     <div class="test">
-        <h2 class="form-name"></h2>
+        <div class="form-head">
+            <h2 class="form-name"></h2>
+            <pre class="description">
+
+            </pre>
+        </div>
         <div class="form">
 
         </div>
     </div>
 
-    <button class="btn btn-success" onclick="saveResponse()">Submit</button>
+    <div class="button-container">
+        <button class="btn btn-warning" onclick="saveResponse()">Submit</button>
+    </div>
 
 </div>
 

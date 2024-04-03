@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.querySelectorAll(".form").forEach(form => {
+    document.querySelectorAll(".form-card").forEach(form => {
         form.onclick = () => window.location.replace(`/form/${form.dataset.code}`)
     })
     
