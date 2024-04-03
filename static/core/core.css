@@ -36,6 +36,13 @@
     background-color: #FF3D00;
     border-color: #ce7c62;
 }
+
+.btn-primary:disabled{
+    background-color: #ce7c62;
+    border-color: #ce7c62;
+    color: #fff;
+}
+
 .btn-primary:hover {
     background-color: #FF3D00;
     border-color: #ce7c62;
