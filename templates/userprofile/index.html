@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-
+{% csrf_token %}
 <div class="container">
     <div class="row justify-content-center">
 
@@ -24,7 +24,7 @@
                 </div>
                 <div class="basic-info">
                     <h5 id="email">User Name</h5>
-                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-acct-name">Edit</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-mail">Edit</button>
                 </div>
                 
             </div>
