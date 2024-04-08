@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    
-    
-});
+var errorDict = {
+    1: "Form name must be added.",
+    2: "You have to tell a bit about your form.",
+    3: "You have to choose the section type.",
+    4: "You have to title you question or terminate the question section.",
+    5: "You need at least one choice.",
+};
 
 // ================================= Form Creation =================================
 
@@ -31,16 +33,106 @@ document.querySelector(".add-section").onclick = () => {
 
 // Bind with the save button
 document.querySelector(".save").onclick = () => {
-    const form = getFormDesign()
-    fetch("api/save_form", {
-        method: "POST",
-        body: JSON.stringify(form)
+    const validateResult = validateForm();
+    const confirmBtn = document.querySelector(".confirm");
+    if (validateResult.isValid) {
+        const form = getFormDesign()
+        fetch("save_form/", {
+            method: "POST",
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            document.querySelector(".modal-title").innerHTML = "Notice";
+            document.querySelector(".modal-body").innerHTML = "Do you want to publish this form?";
+            confirmBtn.classList.remove("hidden")
+            confirmBtn.onclick = () => window.location.replace("/")
+            $("#modal").modal("toggle");
+            
+        })
+        console.log("ALL CORRECT!")
+    } else {
+        console.log("Something went wrong")
+        document.querySelector(".modal-title").innerHTML = "Something went wrong.";
+        document.querySelector(".modal-body").innerHTML = `<ul class="errors"></ul>`
+        confirmBtn.classList.add("hidden")
+        const errorList = document.querySelector(".errors");
+        validateResult.errors.forEach(err => {
+            const error = document.createElement("li");
+            error.innerHTML = errorDict[err];
+            errorList.appendChild(error)
+        })
+        $("#modal").modal("toggle");
+    }
+}
+
+
+const validateForm = () => {
+    console.log("VALIDATE!");
+    const errLog = new Set();
+    
+    // Validate form name; form name is a must
+    const formName = document.querySelector(".form-name");
+    if (!formName.value) {
+        errLog.add(1)
+        formName.classList.add("error")
+    } else {
+        formName.classList.remove("error")
+    }
+
+    // Validate form description;
+    const description = document.querySelector(".form-descr");
+    if (!description.value) {
+        errLog.add(2)
+        description.classList.add("error")
+    } else {
+        description.classList.remove("error")
+    }
+
+    // The form must have at least one section/question.
+    const allSections = document.querySelectorAll("section");
+    allSections.forEach((section,) => {
+        
+        const formType = section.querySelector(".form-select");
+        // firstly, check if the .user choose the form type or not
+        if (!formType.value) {
+            errLog.add(3)
+            formType.classList.add("error")
+        } else {
+            formType.classList.remove("error")
+            const question = section.querySelector(".question");
+            // if user have selected the type. then check if the user title the question.
+            if (!question.value) {
+                errLog.add(4)
+                question.classList.add("error")
+            } else {
+                question.classList.remove("error")
+                // if the user have titled the question, then check if the user have set the first choice, in case that form type is one from checkbox, radio, dropdown
+                const choices = section.querySelectorAll(".choice");
+                if (["checkbox", "dropdown", "radio"].includes(formType.value)) {
+                    let filledChoices = 0;
+                    choices.forEach(choice => {
+                        if (choice.value) filledChoices++;
+                    })
+                    console.log(filledChoices)
+                    // check if the blank choices has been created and there are no filled choice, mean that there are zero choice for answering.
+                    if (filledChoices === 0) {
+                        errLog.add(5);
+                        choices.forEach(choice => choice.classList.add("error"))
+                    } else {
+                        choices.forEach(choice => choice.classList.remove("error"))
+                    }
+                } else {
+                    choices.forEach(choice => choice.classList.remove("error"));
+                }
+            }
+        }
     })
-    .then(response => response.json())
-    .then(response => {
-        console.log(response)
-        window.location.replace("/")
-    })
+    
+    // Return the boolean values of true or false
+    if (errLog.size === 0) return { isValid: true }
+    else return { isValid: false, errors: errLog }
 }
 
 
@@ -78,6 +170,7 @@ const getFormDesign = () => {
             })
         }
     })
+
     return {
         formName: formName,
         description: formDescription,
@@ -90,140 +183,119 @@ const selectFormType = (elem) => {
     // Get the type of the form section.
     type = elem.value;
     displayDiv = elem.parentNode.querySelector(".display");
-    if (type == "dropdown") {
-        dropdownHandler(elem);
-    } else if (type == "checkbox") {
-        checkboxHandler(elem)
-    } else if (type == "radio") {
-        radioHandler(elem)
-    } else if (type == "short") {
-        console.log("short")
-        shortTextHandler(elem)
-    } else if (type == "long") {
-        console.log("long")
-        longTextHandler(elem)
-    } else if (type == "file") {
-        console.log("file")
-        fileUploadHandler(elem)
-    } else if (type == "date") {
-        console.log("date")
-        dateHandler(elem)
-    } else if (type == "time") {
-        console.log("time")
-        timeHandler(elem)
-    }
+    if (type == "dropdown") dropdownHandler(elem);
+    else if (type == "checkbox") checkboxHandler(elem)
+    else if (type == "radio") radioHandler(elem)
+    else if (type == "short") shortTextHandler(elem)
+    else if (type == "long") longTextHandler(elem)
+    else if (type == "file") fileUploadHandler(elem)
+    else if (type == "date") dateHandler(elem)
+    else if (type == "time") timeHandler(elem)
 }
+
 
 const dropdownHandler = (elem) => {
 
     // Initialize drowndown section
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <ol class="choices my-3">
-                <li class="my-1"><input type="text" class="choice"></li>
-            </ol>
-            <button class="add-choices">Add choices</button>
-        </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <ol class="choices my-3">
+            <li class="my-1"><input type="text" class="choice"></li>
+        </ol>
+        <button class="add-choices">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
+
 
 const checkboxHandler = (elem) => {
 
     // Initialize checkbox section
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <div class="choices my-3">
-                <div class="my-1">
-                    <input type="checkbox" disabled>
-                    <input type="text" class="choice">
-                </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <div class="choices my-3">
+            <div class="my-1">
+                <input type="checkbox" disabled>
+                <input type="text" class="choice">
             </div>
-            <button class="add-choices">Add choices</button>
         </div>
+        <button class="add-choices">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
+
 
 const radioHandler = (elem) => {
 
     // Initialize checkbox section
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <div class="choices my-3">
-                <div class="my-1">
-                    <input type="radio" disabled>
-                    <input type="text" class="choice">
-                </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <div class="choices my-3">
+            <div class="my-1">
+                <input type="radio" disabled>
+                <input type="text" class="choice">
             </div>
-            <button class="add-choices">Add choices</button>
         </div>
+        <button class="add-choices">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
+
 
 const shortTextHandler = (elem) => {
 
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <input type="text" class="answer my-2 p-1" disabled/>
-        </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <input type="text" class="answer my-2 p-1" disabled/>
     `
 }
+
 
 const longTextHandler = (elem) => {
 
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <textarea class="answer my-2 p-1" disabled></textarea>
-        </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <textarea class="answer my-2 p-1" disabled></textarea>
     `
 }
+
 
 const fileUploadHandler = (elem) => {
 
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-        <input type="text" class="question form-control" placeholder="Untitled Question">
-            <div class="input-group my-3">
-                <input type="file" class="form-control answer" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" disabled>
-            </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <div class="input-group my-3">
+            <input type="file" class="form-control answer" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" disabled>
         </div>
     `
 }
+
 
 const dateHandler = (elem) => {
 
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <input type="date" class="answer form-control my-3" />
-        </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <input type="date" class="answer form-control my-3" disabled/>
     `
 }
+
 
 const timeHandler = (elem) => {
 
     displayDiv = elem.parentNode.querySelector(".display");
     displayDiv.innerHTML = `
-        <div class="card my-2 p-3">
-            <input type="text" class="question form-control" placeholder="Untitled Question">
-            <input type="time" class="answer form-control my-3" />
-        </div>
+        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
+        <input type="time" class="answer form-control my-3" disabled/>
     `
 }
+
 
 const addChoices = (elem) => {
     const type = elem.parentNode.querySelector("select").value

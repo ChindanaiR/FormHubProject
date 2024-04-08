@@ -1,15 +1,37 @@
 {% extends "layout.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'form_management/main.css' %}">
+{% endblock %}
+
 {% block body %}
 
 <div class="container">
     <h1>Form Management</h1>
 
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="noticeModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary confirm">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <div class="design-container">
         <div class="form-detail card p-3">
             <label for="form-name">Form Name:</label>
-            <input type="text" name="form-name" class="form-control mb-2 form-name">
+            <input type="text" name="form-name" class="form-control mb-2 form-name" required>
             <label for="description">Description:</label>
             <textarea name="description" cols="30" rows="5" class="form-control form-descr"></textarea>
         </div>
@@ -25,7 +47,7 @@
                 <option value="date">Date</option>
                 <option value="time">Time</option>
             </select>
-            <div class="display"></div>
+            <div class="display d-flex flex-column"></div>
         </section>
     </div>
 
@@ -35,5 +57,9 @@
 
 </div>
 
-<script src="{% static 'form_management/main.js' %}"></script>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'form_management/main.js' %}"></script>
 {% endblock %}

@@ -141,4 +141,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Set default page for unauthorize user
-LOGIN_URL = "/login/"
+LOGIN_URL = "/auth/"
