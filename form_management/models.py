@@ -43,3 +43,12 @@ class Form(models.Model):
             'category': self.category,
             'design': self.design,
         }
+
+class FormResponse(models.Model):
+    form = models.ForeignKey(Form, on_delete = models.CASCADE)
+    responder = models.ForeignKey(User, on_delete = models.CASCADE)
+    response = models.JSONField()
+    answering_time = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return f"Response from {self.responder}"

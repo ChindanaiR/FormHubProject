@@ -52,9 +52,17 @@ def get_form(request, form_id):
 @api_view(["POST"])
 def save_response(request):
 	
-	data = request.data
-	print(data)
+	if request.method == "POST":
+		data = request.data
+		form_response = FormResponse(
+			form = Form.objects.get(pk = data["formId"]),
+			responder = request.user,
+			response = data["response"],
+		)
+		form_response.save()
 
-	return JsonResponse({"msg": "Function called!"})
+		return JsonResponse({"msg": "Response saved."}, status = 200)
+	
+	return JsonResponse({"error": "Only POST request is allowed"}, status = 403)
 
 # =======================================================================

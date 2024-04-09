@@ -13,6 +13,21 @@ from .models import *
 def index(request):
     return render(request, "form_management/index.html", {})
 
+@login_required
+def form_response(request):
+
+    form = Form.objects.get(pk = 5)
+    form_responses = FormResponse.objects.filter(form = form)
+    print(form_responses[0].__dict__.keys())
+    questions = [resp["question"] for resp in form_responses[0].response]
+    print(form_responses)
+
+    return render(request, "form_management/form_response.html", {
+        "form_name": form.form_name,
+        "questions": questions, 
+        "records": form_responses,
+    })
+
 
 # =================================== APIs ===================================
 
