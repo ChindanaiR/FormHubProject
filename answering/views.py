@@ -21,7 +21,7 @@ def index(request):
 		"forms": forms
 	})
 
-
+@login_required
 def form_answering(request, form_id):
 	return render(request, "answering/form.html", {})
 
