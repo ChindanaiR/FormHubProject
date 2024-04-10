@@ -12,7 +12,7 @@
     emailElement.textContent = `Email : ${data.email}`;
   })
 
-  
+
   //ปุ่ม Edit Name
   const editButtons = document.getElementById('edit-acct-name');
 editButtons.addEventListener('click', function() {
@@ -25,7 +25,7 @@ editButtons.addEventListener('click', function() {
             body: JSON.stringify({
                 username: newName
             })
-        }).then(response => {
+        }).then(response => {     //จะแจ้งเตือนหากมีซ้ำ
             if (response.ok) {
                 return response.json();
             }
@@ -38,14 +38,13 @@ editButtons.addEventListener('click', function() {
                 nameElement.textContent = `Username : ${newName}`;
             }
         }).catch(error => {
-            alert(error.message);
+          alert(error.message)
         });
+        }
     }
-});
-            
-            
-            
+);
 
+            
   //ปุ่ม Edit mail
   const editmailButtons = document.getElementById('edit-mail');
   editmailButtons.addEventListener('click', function() {
@@ -67,16 +66,59 @@ editButtons.addEventListener('click', function() {
               if (data.error) {
                   alert(data.error);
               } else {
-                  const nameElement = document.querySelector('#acct_name');
+                  const nameElement = document.querySelector('#edit-mail');
                   nameElement.textContent = `Email : ${newmail}`;
               }
-          }).catch(error => {
-              alert(error.message);
-          });
+          })
       }
   });
-            
-  
 
 
+
+
+
+const getPic = () => {
+  fetch("api/getpic", {
+      method: "GET"
+  })
+  .then(response => response.json())
+  .then(resp => {
+      console.log(resp)
+      const img = document.querySelector(".display")
+      img.src = "/" + resp.img
+  })
+}
+
+
+
+const uploadFile = () => {
+  const img = document.querySelector("#fileupload").files[0];
+
+  // console.log(img)
+  const formData = new FormData();
+  formData.append("img", img);
   
+  fetch("api/upload", {
+      method: "POST",
+      body: formData,
+  })
+  .then(response => response.json())
+  .then(() => {
+    location.reload();
+  });
+}
+
+// const displayPic = () => {
+//   fetch("api/getpic", {
+//       method: "GET",
+//   })
+//   .then(response => response.json())
+//   .then(resp => {
+//       console.log(resp.img)
+//       // const test_img = 'static/userprofile/imgs.jpg'
+//       // const img = document.getElementById('prof-pic')
+//       // img.src = `/${test_img}`;
+      
+//   })
+// }
+

@@ -6,12 +6,15 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
+import os
 
 from .models import *
 
 
 def index(request):
-    return render(request, "userprofile/index.html", {})
+    user = User.objects.get(pk = request.user.id)
+    return render(request, "userprofile/index.html", {"id":user.id,
+                                                      "userpic":user.profile_img})
 
 
 # API
@@ -21,12 +24,13 @@ def get_userinfo(request):  #ส่งข้อมูลไรบ้างไป
 
 		user = User.objects.get(pk = request.user.id)
 		return JsonResponse({
+            "id":user.id,
 			"name":user.username,
 			"email":user.email,
 		})
 	
 
-	
+
 @login_required
 @csrf_exempt
 def update_userinfo(request):
@@ -55,4 +59,43 @@ def update_userinfo(request):
         return JsonResponse({'message': 'User info updated successfully'})
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+
+@csrf_exempt
+def upload_pic(request):
+    print("=" * 100)    
+    if request.method == "POST": 
+
+        image_update = request.FILES.get("img")
+        print(image_update)
+      
+
+# ระบุตำแหน่งของไฟล์ที่ต้องการลบ
+        file_path = f"{request.user.profile_img}" 
+        print(file_path)
+        
+        if os.path.exists(file_path):
+    # ลบไฟล์
+            os.remove(file_path)
+            print("ไฟล์ถูกลบแล้ว")
+        else:
+            print("ไม่พบไฟล์ที่ต้องการลบ")
+
+        user = request.user
+        new_filename = f"{request.user.id}_{request.user.username}.jpg"  # ชื่อไฟล์ใหม่ที่คุณต้องการ
+        user.profile_img.save(new_filename, image_update)
+        user.save()
+
+        return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+    
+    return JsonResponse({"msg": "failed"})
+
+
+def getpic(request):
+
+    if request.method == "GET" and request:
+        return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+
+    return JsonResponse({"msg": "failed upload"})
 
