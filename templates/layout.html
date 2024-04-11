@@ -29,16 +29,18 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/">Home</a>
                         </li>
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="/manage/">Create</a>
                         </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="/leaderboard/">Leaderboard</a>
                         </li>
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="/redeem/">Redeem</a>
                         </li>
-                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="/account/">User Profile</a>
                         </li>

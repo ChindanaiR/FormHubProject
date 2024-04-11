@@ -17,7 +17,7 @@
             <img id="prof-pic" src="https://pbs.twimg.com/media/EOHvlzOXUAAScN5.jpg">
         </div>
         <div>
-            <h2><strong>ComZa555</strong></h2>
+            <h2><strong>{{ user.username }}</strong></h2>
         </div>
 
         <div class="container d-flex flex-column justify-content-center align-items-center" id="basic-point">
@@ -34,10 +34,79 @@
         </div>
     </div>
 
-    <div class="col-4" id="redeem-container">
-        <h2>Redeem</h2>
-    </div>
+    <div class="container" id="redeem-container">
+        <div class="my-2">
+            <div class="redeem-option">
+                Cash
+            </div>
+            <div class="row g-2 py-2 align-items-center mx-auto" id="redeem-cash">
+                <div class="form-floating col-8">
+                    <input type="text" class="form-control" id="floatingCash" placeholder="Convert To (THB)">
+                    <label for="floatingCash">Convert To (THB)</label>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-primary" >Convert</button>
+                </div>
+                <div id="remain">
+                    Display Remaining Points
+                </div>
+            </div>
+        </div>
+        <div class="my-2">
+            <div class="redeem-option">
+                Discount
+            </div>
+            <div class="wrapper-discount">
+                {% for discount in unused_discounts %}
+                    <div class="card mx-2" style="min-width: 12rem;">
+                        <div class="card-body">
+                        <p class="card-text">{{ discount.description }}</p>
+                        <a href="{% url 'redeem' discount.id %}" class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h3>No Discount Available for Now 🥺</h3>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="my-2">
+            <div class="redeem-option">
+                Prize
+            </div>
+            <div class="wrapper-prize">
+                {% for prize in unused_prizes %}
+                    <div class="card mx-2" style="min-width: 12rem;">
+                        <div class="card-body">
+                        <p class="card-text">{{ prize.description }}</p>
+                        <a href="{% url 'redeem' prize.id %}" class="redeem-btn btn btn-primary"  data-redeem-id="{{ prize.id }}">Redeem</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h3>No Prize Available for Now 🥺</h3>
+                {% endfor %}
+            </div>
+        </div>
 
+        <!-- Modal -->
+        <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure to redeem?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nah</button>
+                    <button type="button" class="btn btn-primary">Yes, I am.</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
 </div>
+
+{% block extra_js %}
+    <script src="{% static 'redeem/redeem.js' %}"></script>
+{% endblock %}
 
 {% endblock %}
