@@ -11,7 +11,7 @@
     nameElement.textContent = `Username : ${data.name}`;
     emailElement.textContent = `Email : ${data.email}`;
   })
-
+  
 
   //ปุ่ม Edit Name
   const editButtons = document.getElementById('edit-acct-name');
@@ -84,7 +84,7 @@ const getPic = () => {
   .then(response => response.json())
   .then(resp => {
       console.log(resp)
-      const img = document.querySelector(".display")
+      const img = document.querySelector("#prof-pic")
       img.src = "/" + resp.img
   })
 }
