@@ -180,74 +180,122 @@ const getData = (formId) => {
 
 // =========================================== Saving response ===========================================
 
-const saveResponse = () => {
-    const responses = [];
+const validateAnswer = () => {
+    let blanked = 0;
     document.querySelectorAll(".section").forEach((section) => {
         formType = section.dataset.formtype;
-        const question = section.querySelector(".question").dataset.question;
-        const sectionNumber = section.dataset.sectionnum;
         if (formType === "dropdown") {
-            console.log("DD")
-            responses.push({
-                section: sectionNumber,
-                type: formType,
-                question: question,
-                response: section.querySelector("select").value,
-            })
+            if (!section.querySelector("select").value) {
+                section.classList.add("need-to-answer");
+                blanked++
+            } else section.classList.remove("need-to-answer");
         } else if (formType === "checkbox") {
-            console.log("CB");
             checkedEntry = [];
             section.querySelectorAll(".checkbox").forEach(item => {
                 checkbox = item.querySelector("input");
                 if (checkbox.checked) checkedEntry.push(checkbox.name);
             })
-            responses.push({
-                section: sectionNumber,
-                type: formType,
-                question: question,
-                response: checkedEntry,
-            });
+            if (checkedEntry.length === 0) {
+                section.classList.add("need-to-answer")
+                blanked++
+            } else section.classList.remove("need-to-answer");
         } else if (formType === "radio") {
-            console.log("RD");
+            let checkedEntry;
             section.querySelectorAll(".radio").forEach(item => {
                 radio = item.querySelector("input");
                 if (radio.checked) checkedEntry = radio.value;
             })
-            responses.push({
-                section: sectionNumber,
-                type: formType,
-                question: question,
-                response: checkedEntry,
-            });
+            if (!checkedEntry) {
+                section.classList.add("need-to-answer");
+                blanked++
+            } else section.classList.remove("need-to-answer");
         } else if (["short", "long", "date", "time"].includes(formType)) {
-            console.log("SHORT");
-            content = section.querySelector(".answer").value;
-            responses.push({
-                section: sectionNumber,
-                type: formType,
-                question: question,
-                response: content,
-            });
+            if (!section.querySelector(".answer").value) {
+                section.classList.add("need-to-answer");
+                blanked++
+            } else section.classList.remove("need-to-answer");
         }
-    })
-    console.log(responses);
-    const formId = window.location.href.split("/").at(-1)
-    const csrfToken = getCookie("csrftoken");
-    fetch("/save_response/", {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken,
-        },
-        body: JSON.stringify({
-            formId: formId,
-            response: responses,
+    });
+    return blanked === 0 ? true : false;
+}
+
+const saveResponse = () => {
+    const responses = [];
+    if (validateAnswer()) {
+        document.querySelectorAll(".section").forEach((section) => {
+            formType = section.dataset.formtype;
+            const question = section.querySelector(".question").dataset.question;
+            const sectionNumber = section.dataset.sectionnum;
+            if (formType === "dropdown") {
+                console.log("DD")
+                responses.push({
+                    section: sectionNumber,
+                    type: formType,
+                    question: question,
+                    response: section.querySelector("select").value,
+                })
+            } else if (formType === "checkbox") {
+                console.log("CB");
+                checkedEntry = [];
+                section.querySelectorAll(".checkbox").forEach(item => {
+                    checkbox = item.querySelector("input");
+                    if (checkbox.checked) checkedEntry.push(checkbox.name);
+                })
+                responses.push({
+                    section: sectionNumber,
+                    type: formType,
+                    question: question,
+                    response: checkedEntry,
+                });
+            } else if (formType === "radio") {
+                console.log("RD");
+                section.querySelectorAll(".radio").forEach(item => {
+                    radio = item.querySelector("input");
+                    if (radio.checked) checkedEntry = radio.value;
+                })
+                responses.push({
+                    section: sectionNumber,
+                    type: formType,
+                    question: question,
+                    response: checkedEntry,
+                });
+            } else if (["short", "long", "date", "time"].includes(formType)) {
+                console.log("SHORT");
+                content = section.querySelector(".answer").value;
+                responses.push({
+                    section: sectionNumber,
+                    type: formType,
+                    question: question,
+                    response: content,
+                });
+            }
         })
-    })
-    .then(response => response.json())
-    .then(response => {
-        console.log(response)
-    })
+        console.log(responses);
+        const formId = window.location.href.split("/").at(-1)
+        const csrfToken = getCookie("csrftoken");
+        fetch("/save_response/", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({
+                formId: formId,
+                response: responses,
+            })
+        })
+        .then(response => response.json())
+        .then(response => {
+            document.querySelector(".modal-title").innerHTML = "Notice";
+            document.querySelector(".modal-body").innerHTML = response.msg;
+            document.querySelector(".dismiss").onclick = () => window.location.assign("/");
+            $("#modal").modal("toggle");
+        })
+    } else {
+        document.querySelector(".modal-title").innerHTML = "Notice";
+        document.querySelector(".modal-body").innerHTML = `You need to answer all of the questions`
+        $("#modal").modal("toggle");
+    }
 }
 
 const getCookie = (name) => {

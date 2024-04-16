@@ -46,3 +46,13 @@
 button {
     font-weight: bold;
 }
+
+.need-to-answer {
+    border: 1.5px solid red;
+    outline: none;
+    box-shadow: 0 0 10px red;
+}
+
+.hidden {
+    display: none;
+}

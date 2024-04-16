@@ -61,7 +61,7 @@ def save_response(request):
 		)
 		form_response.save()
 
-		return JsonResponse({"msg": "Response saved."}, status = 200)
+		return JsonResponse({"msg": "Your response has been saved successfully."}, status = 200)
 	
 	return JsonResponse({"error": "Only POST request is allowed"}, status = 403)
 
