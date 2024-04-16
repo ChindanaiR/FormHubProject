@@ -228,15 +228,6 @@ const saveResponse = () => {
                 question: question,
                 response: content,
             });
-        } else if (formType === "file") {
-            console.log("FILE");
-            content = section.querySelector(".answer").files[0];
-            responses.push({
-                section: sectionNumber,
-                type: formType,
-                question: question,
-                response: content,
-            });
         }
     })
     console.log(responses);

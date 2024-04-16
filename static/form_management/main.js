@@ -22,7 +22,6 @@ document.querySelector(".add-section").onclick = () => {
             <option value="radio">Radio</option>
             <option value="short">Short text</option>
             <option value="long">Long Text</option>
-            <option value="file">Upload file</option>
             <option value="date">Date</option>
             <option value="time">Time</option>
         </select>
@@ -155,7 +154,7 @@ const getFormDesign = () => {
                 question: question,
                 options: choices,
             })
-        } else if (["short", "long", "file", "date", "time"].includes(type)) {
+        } else if (["short", "long", "date", "time"].includes(type)) {
             question = section.querySelector(".question").value
             design.push({
                 section: idx + 1,
@@ -188,7 +187,6 @@ const selectFormType = (elem) => {
     else if (type == "radio") radioHandler(elem)
     else if (type == "short") shortTextHandler(elem)
     else if (type == "long") longTextHandler(elem)
-    else if (type == "file") fileUploadHandler(elem)
     else if (type == "date") dateHandler(elem)
     else if (type == "time") timeHandler(elem)
 }
@@ -261,18 +259,6 @@ const longTextHandler = (elem) => {
     displayDiv.innerHTML = `
         <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
         <textarea class="answer my-2 p-1" disabled></textarea>
-    `
-}
-
-
-const fileUploadHandler = (elem) => {
-
-    displayDiv = elem.parentNode.querySelector(".display");
-    displayDiv.innerHTML = `
-        <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
-        <div class="input-group my-3">
-            <input type="file" class="form-control answer" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" disabled>
-        </div>
     `
 }
 
