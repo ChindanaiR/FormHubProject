@@ -15,7 +15,12 @@ from .models import *
 
 def index(request):
 
-	forms = Form.objects.filter(is_open = True)
+	if (request.user.is_authenticated):
+		is_already_answered_form = FormResponse.objects.filter(responder = request.user).values("form_id").distinct()
+		exclude_form_list = [item["form_id"] for item in is_already_answered_form]
+		forms = Form.objects.filter(is_open = True).exclude(id__in=exclude_form_list)
+	else:
+		forms = Form.objects.filter(is_open = True)
 
 	return render(request, "answering/index.html", {
 		"forms": forms
@@ -28,7 +33,7 @@ def form_answering(request, form_id):
 
 # ================================= API =================================
 
-
+import time
 @login_required
 @csrf_exempt
 @api_view(["GET"])
@@ -36,13 +41,27 @@ def get_form(request, form_id):
     
 	if request.method == "GET":
 
-		form = Form.objects.get(pk = form_id)
-		print(form)
-		return JsonResponse({
-			"formName": form.form_name,
-			"description": form.description,
-			"design": form.design,
-		}, status = 201)
+		try:
+			form = Form.objects.get(pk = form_id)
+
+			# Check if the form is close or not
+			if not form.is_open:
+				return JsonResponse({"error": "This form has been closed by the owner."}, status = 403)
+
+			# Check if the user used to answer this form.
+			response = FormResponse.objects.filter(responder = request.user, form = form)
+			if response.exists():
+				return JsonResponse({"error": "You have already answered this form."}, status = 403)
+
+
+			print(form)
+			return JsonResponse({
+				"formName": form.form_name,
+				"description": form.description,
+				"design": form.design,
+			}, status = 201)
+		except:
+			return JsonResponse({"error": "Invalid form."})
 
 	return JsonResponse({"error": "Something went wrong"}, status = 400)
 
@@ -53,9 +72,18 @@ def get_form(request, form_id):
 def save_response(request):
 	
 	if request.method == "POST":
+
 		data = request.data
+		form = Form.objects.get(pk = data["formId"])
+
+		# Check if the user has already answered the form
+		response = FormResponse.objects.filter(responder = request.user, form = form)
+		print(f"YEEEEEEEEEEEEEEEEEEEEE {response.exists()}")
+		if response.exists():
+			return JsonResponse({"error": "You have already answered this form."}, status = 403)
+		
 		form_response = FormResponse(
-			form = Form.objects.get(pk = data["formId"]),
+			form = form,
 			responder = request.user,
 			response = data["response"],
 		)

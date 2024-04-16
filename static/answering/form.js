@@ -143,6 +143,11 @@ const getData = (formId) => {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.error) {
+            alert(data.error)
+            window.location.assign("/")
+            return;
+        }
         const formName = data.formName;
         const sections = data.design;
         const description = data.description;
@@ -287,7 +292,10 @@ const saveResponse = () => {
         .then(response => response.json())
         .then(response => {
             document.querySelector(".modal-title").innerHTML = "Notice";
-            document.querySelector(".modal-body").innerHTML = response.msg;
+
+            if (response.error) document.querySelector(".modal-body").innerHTML = response.error;
+            else document.querySelector(".modal-body").innerHTML = response.msg;
+            
             document.querySelector(".dismiss").onclick = () => window.location.assign("/");
             $("#modal").modal("toggle");
         })
