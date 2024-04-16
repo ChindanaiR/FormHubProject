@@ -1,0 +1,46 @@
+:root {
+    --main-bg: #4CAF50;
+    --card-trans-bg: #FFFFFFE0;
+}
+
+.card-cover {
+    background-color: var(--main-bg);
+    border-radius: .5rem;
+
+    & .header {
+
+        & .form-name {
+            background-color: var(--card-trans-bg);
+            border-radius: .5rem;
+            width: 100%;
+
+            & .status {
+                font-size: 1.25rem;
+            }
+
+            & .active {
+                color: green;
+            }
+
+            & .closed {
+                color: red;
+            }
+
+            > h3 {
+                margin: 0;
+            }
+        }
+
+    }
+
+    & .card-trans {
+        background-color: var(--card-trans-bg);
+        border-radius: .5rem;;
+    }
+}
+
+& .close-btn {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+

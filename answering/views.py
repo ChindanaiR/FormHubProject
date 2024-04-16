@@ -23,6 +23,7 @@ def index(request):
 		forms = Form.objects.filter(is_open = True)
 
 	return render(request, "answering/index.html", {
+		"title": "All Active Forms",
 		"forms": forms
 	})
 
