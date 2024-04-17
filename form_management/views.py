@@ -9,10 +9,35 @@ import json
 
 from .models import *
 
-
+@login_required
 def index(request):
     return render(request, "form_management/index.html", {})
 
+@login_required
+def form_response(request, form_id):
+
+    form = Form.objects.get(pk = form_id)
+    form_responses = FormResponse.objects.filter(form = form)
+    print(form_responses[0].__dict__.keys())
+    questions = [resp["question"] for resp in form_responses[0].response]
+    print(form_responses)
+
+    return render(request, "form_management/form_response.html", {
+        "form_name": form.form_name,
+        "questions": questions, 
+        "records": form_responses,
+        "is_open": form.is_open,
+    })
+
+@login_required
+def my_forms(request):
+
+    forms = Form.objects.filter(owner = request.user)
+    
+    return render(request, "form_management/myforms.html", {
+        "title": "My Forms",
+		"forms": forms
+	})
 
 # =================================== APIs ===================================
 

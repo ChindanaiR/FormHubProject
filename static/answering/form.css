@@ -1,0 +1,58 @@
+:root {
+    --main-bg: #4CAF50;
+    --card-trans-bg: #FFFFFFE0;
+}
+
+.container {
+    border-radius: .25rem;
+    padding: 2rem;
+    background-color: var(--main-bg);
+}
+
+.form-head {
+
+    padding: 1rem;
+    border-radius: .25rem;
+    background-color: var(--card-trans-bg);
+
+    & h2 {
+        font-weight: bold;
+    }
+    
+    & pre.description {
+        font-family: Helvetica, sans-serif;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+}
+
+.form {
+
+    & .section {
+        border-radius: .25rem;
+        background-color: var(--card-trans-bg);
+    }
+
+    & .question {
+        color: #FFFFFF;
+        background-color: #2196F3;
+        padding: .5rem;
+        border-radius: .25rem;
+        font-weight: bold;
+    }
+}
+
+button {
+    font-weight: bold;
+}
+
+.need-to-answer {
+    border: 1.5px solid red;
+    outline: none;
+    box-shadow: 0 0 10px red;
+}
+
+.hidden {
+    display: none;
+}

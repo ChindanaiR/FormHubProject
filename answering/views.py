@@ -15,118 +15,83 @@ from .models import *
 
 def index(request):
 
-	forms = Form.objects.filter(is_open = True)
+	if (request.user.is_authenticated):
+		is_already_answered_form = FormResponse.objects.filter(responder = request.user).values("form_id").distinct()
+		exclude_form_list = [item["form_id"] for item in is_already_answered_form]
+		forms = Form.objects.filter(is_open = True).exclude(id__in=exclude_form_list)
+	else:
+		forms = Form.objects.filter(is_open = True)
 
 	return render(request, "answering/index.html", {
+		"title": "All Active Forms",
 		"forms": forms
 	})
 
-
+@login_required
 def form_answering(request, form_id):
 	return render(request, "answering/form.html", {})
 
 
 # ================================= API =================================
 
-
-# @login_required
-# @csrf_exempt
+import time
+@login_required
+@csrf_exempt
 @api_view(["GET"])
 def get_form(request, form_id):
     
 	if request.method == "GET":
 
-		form = Form.objects.get(pk = form_id)
-		print(form)
-		return JsonResponse({
-			"formName": form.form_name,
-			"description": form.description,
-			"design": form.design,
-		})
+		try:
+			form = Form.objects.get(pk = form_id)
 
-		# return JsonResponse({
-		# 	"formName": "Trying a rendering logic",
-		# 	"design": 	[
-		# 					{
-		# 						"section": 1,
-		# 						"type": "checkbox",
-		# 						"question": "Test checkbox",
-		# 						"options": [
-		# 							"234567",
-		# 							"rtyuio",
-		# 							"rtyui",
-		# 							"bsdfsdf"
-		# 						]
-		# 					},
-		# 					{
-		# 						"section": 2,
-		# 						"type": "dropdown",
-		# 						"question": "Test dropdown",
-		# 						"options": [
-		# 							"12345",
-		# 							"567890",
-		# 							"dfghjkl",
-		# 							"asdas"
-		# 						]
-		# 					},
-		# 					{
-		# 						"section": 3,
-		# 						"type": "checkbox",
-		# 						"question": "checkbox again",
-		# 						"options": [
-		# 							"23456",
-		# 							"hjkl;",
-		# 							"67890-"
-		# 						]
-		# 					},
-		# 					{
-		# 						"section": 4,
-		# 						"type": "radio",
-		# 						"question": "Test radio",
-		# 						"options": [
-		# 							"asdasd",
-		# 							"adasd",
-		# 							"45678",
-		# 							"tyui"
-		# 						]
-		# 					},
-		# 					{
-		# 						"section": 5,
-		# 						"type": "radio",
-		# 						"question": "Test radio 2",
-		# 						"options": [
-		# 							"12345678",
-		# 							"0987654",
-		# 							"12345678",
-		# 							"09876543"
-		# 						]
-		# 					},
-		# 					{
-		# 						"section": 6,
-		# 						"type": "long",
-		# 						"question": "Test long text",
-		# 					},
-		# 					{
-		# 						"section": 7,
-		# 						"type": "short",
-		# 						"question": "Test short text",
-		# 					},
-		# 					{
-		# 						"section": 8,
-		# 						"type": "file",
-		# 						"question": "Test file upload",
-		# 					},
-		# 					{
-		# 						"section": 9,
-		# 						"type": "date",
-		# 						"question": "Test date",
-		# 					},
-		# 					{
-		# 						"section": 10,
-		# 						"type": "time",
-		# 						"question": "Test time",
-		# 					},
-		# 				]
-		# }, status = 201)
+			# Check if the form is close or not
+			if not form.is_open:
+				return JsonResponse({"error": "This form has been closed by the owner."}, status = 403)
+
+			# Check if the user used to answer this form.
+			response = FormResponse.objects.filter(responder = request.user, form = form)
+			if response.exists():
+				return JsonResponse({"error": "You have already answered this form."}, status = 403)
+
+
+			print(form)
+			return JsonResponse({
+				"formName": form.form_name,
+				"description": form.description,
+				"design": form.design,
+			}, status = 201)
+		except:
+			return JsonResponse({"error": "Invalid form."})
+
 	return JsonResponse({"error": "Something went wrong"}, status = 400)
+
+
+@login_required
+@csrf_exempt
+@api_view(["POST"])
+def save_response(request):
+	
+	if request.method == "POST":
+
+		data = request.data
+		form = Form.objects.get(pk = data["formId"])
+
+		# Check if the user has already answered the form
+		response = FormResponse.objects.filter(responder = request.user, form = form)
+		print(f"YEEEEEEEEEEEEEEEEEEEEE {response.exists()}")
+		if response.exists():
+			return JsonResponse({"error": "You have already answered this form."}, status = 403)
+		
+		form_response = FormResponse(
+			form = form,
+			responder = request.user,
+			response = data["response"],
+		)
+		form_response.save()
+
+		return JsonResponse({"msg": "Your response has been saved successfully."}, status = 200)
+	
+	return JsonResponse({"error": "Only POST request is allowed"}, status = 403)
+
 # =======================================================================
