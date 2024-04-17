@@ -5,6 +5,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'userprofile/userprofile.css' %}">
+    <link rel="stylesheet" href="{% static 'answering/index.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -37,29 +38,29 @@
         </div>
 
         <!-- user's forms -->
-        <div class="container-fluid d-flex flex-column justify-content-center" id="user-prof-forms">
+        <div class="container" id="user-prof-forms">
             <h2><strong>User's Published Forms</strong></h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div class="all-forms d-flex flex-row flex-wrap">
+                {% for form in user_forms %}
+                    <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
+                        <div class="form p-2 d-flex flex-column">
+                            <div class="img-container d-flex justify-content-center">
+                                <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
+                            </div>
+                            <div class="form-meta-data mt-2 p-2">
+                                <h6 class="form-name">{{ form.form_name }}</h6>
+                                <div class="description">
+                                    {{ form.description }}
+                                </div>
+                                <div class="bottom-section mt-auto p-1">
+                                    <span class="point">{{ form.form_point }}</span><span class="unit">pts.</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+                {% empty %}
+                    <h3>No form</h3>
+                {% endfor %}
             </div>
         </div>
 </div>
@@ -67,6 +68,7 @@
 {% block extra_js %}
     <!-- JAVA LOCAL -->
     <script src="{% static 'userprofile/userprofile.js' %}"></script>
+    <script src="{% static 'answering/index.js' %}"></script>
 {% endblock %}
 
 {% endblock %}
