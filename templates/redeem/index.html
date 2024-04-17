@@ -39,7 +39,7 @@
             <div class="redeem-option">
                 Cash
             </div>
-            <div class="row g-2 py-2 align-items-center mx-auto" id="redeem-cash">
+            <!-- <div class="row g-2 py-2 align-items-center mx-auto" id="redeem-cash">
                 <div class="form-floating col-8">
                     <input type="text" class="form-control" id="floatingCash" placeholder="Convert To (THB)">
                     <label for="floatingCash">Convert To (THB)</label>
@@ -50,6 +50,21 @@
                 <div id="remain">
                     Display Remaining Points
                 </div>
+            </div> -->
+            
+            <div class="wrapper-cash">
+                    {% for option in cash_options %}
+                    <div class="card mx-2" style="min-width: 12rem;">
+                        <div class="card-body">
+                            <p class="card-text">{{ option.description }}</p>
+                            <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                            <div id = 'confirmButtons' style="display: none;">
+                                <button class="cancel-btn btn btn-secondary">Cancel</button>
+                                <button href="{% url 'redeem' option.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
             </div>
         </div>
         <div class="my-2">
@@ -60,8 +75,12 @@
                 {% for discount in unused_discounts %}
                     <div class="card mx-2" style="min-width: 12rem;">
                         <div class="card-body">
-                        <p class="card-text">{{ discount.description }}</p>
-                        <a href="{% url 'redeem' discount.id %}" class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</a>
+                            <p class="card-text">{{ discount.description }}</p>
+                            <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                        </div>
+                        <div id = 'confirmButtons' style="display: none;">
+                            <button class="cancel-btn btn btn-secondary">Cancel</button>
+                            <button href="{% url 'redeem' discount.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
                         </div>
                     </div>
                 {% empty %}
@@ -78,7 +97,12 @@
                     <div class="card mx-2" style="min-width: 12rem;">
                         <div class="card-body">
                         <p class="card-text">{{ prize.description }}</p>
-                        <a href="{% url 'redeem' prize.id %}" class="redeem-btn btn btn-primary"  data-redeem-id="{{ prize.id }}">Redeem</a>
+                        <p class="card-text">{{ prize.point }} points</p>
+                        <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ prize.id }}">Redeem</button>
+                        <div id = 'confirmButtons' style="display: none;">
+                            <button class="cancel-btn btn btn-secondary">Cancel</button>
+                            <button href="{% url 'redeem' prize.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                        </div>
                         </div>
                     </div>
                 {% empty %}

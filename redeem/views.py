@@ -21,8 +21,18 @@ def index(request):
         #     Q(redeem__redeem_code = 'PRZ')
         # ).values_list('redeem_id', flat=True)
         # print(prizes)
-
+    
     user = request.user
+
+    # Show reamining points sum from both form response and redeem
+    points_formresponse = FormResponse.objects.filter(responder = user)
+    points_redeem = RedeemTransaction.objects.filter(user_id = user)
+
+    # create new field to store points in FormResponse
+    # remaining = sum(points_formresponse) + sum(points_redeem.point)
+
+    # CASH
+    cash_options = RedeemItem.objects.filter(redeem_code = 'CSH')
 
     # Filter unused redeems
     used_redeems = RedeemTransaction.objects.filter(user_id = user.id).values_list('redeem_id', flat=True)
@@ -35,6 +45,8 @@ def index(request):
     unused_prizes = unused_redeems.filter(redeem_code = 'PRZ')
 
     return render(request, "redeem/index.html", {
+        # "remaining": remaining,
+        "cash_options": cash_options,
         "unused_discounts": unused_discounts,
         "unused_prizes": unused_prizes
     })
@@ -52,4 +64,4 @@ def redeem(request, redeem_id):
     # return JsonResponse({
     #     'alert': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳'
     # })
-    return render(request, "redeem/index.html")
+    return HttpResponseRedirect(reverse("index"))

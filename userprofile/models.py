@@ -9,7 +9,7 @@ class PointTransaction(models.Model):
     form_id = models.ForeignKey(Form, on_delete = models.CASCADE, null = True)
 
 class RedeemItem(models.Model):
-    redeem_code = models.CharField(max_length=3) # DCT, PRZ, CASH100, CASH300, CASH500
+    redeem_code = models.CharField(max_length=3) # DCT, PRZ, 100, 300, 500
     description = models.CharField(max_length=150) # details
     point = models.IntegerField() 
 
