@@ -57,10 +57,10 @@
                     <div class="card mx-2" style="min-width: 12rem;">
                         <div class="card-body">
                             <p class="card-text">{{ option.description }}</p>
-                            <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
-                            <div id = 'confirmButtons' style="display: none;">
-                                <button class="cancel-btn btn btn-secondary">Cancel</button>
-                                <button href="{% url 'redeem' option.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                            <p class="card-text"><STRONG>Point : {{option.point}}</STRONG><p>
+                            
+                            <div id = 'confirm' >
+                                <button class="redeem-btn btn btn-primary" value="{{option.redeem_code}}" name="{{option.id}}" id="redeem_btn"  >Redeem</button>
                             </div>
                         </div>
                     </div>
@@ -76,12 +76,10 @@
                     <div class="card mx-2" style="min-width: 12rem;">
                         <div class="card-body">
                             <p class="card-text">{{ discount.description }}</p>
-                            <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                            <p class="card-text"><STRONG>Point : {{discount.point}}</STRONG><p>
                         </div>
-                        <div id = 'confirmButtons' style="display: none;">
-                            <button class="cancel-btn btn btn-secondary">Cancel</button>
-                            <button href="{% url 'redeem' discount.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
-                        </div>
+                        <div id = 'confirm'  >
+                            <button class="redeem-btn btn btn-primary" value="{{discount.redeem_code}}" id="redeem_btn" name="{{discount.id}}">Redeem</button>                        </div>
                     </div>
                 {% empty %}
                     <h3>No Discount Available for Now 🥺</h3>
@@ -97,11 +95,9 @@
                     <div class="card mx-2" style="min-width: 12rem;">
                         <div class="card-body">
                         <p class="card-text">{{ prize.description }}</p>
-                        <p class="card-text">{{ prize.point }} points</p>
-                        <button class="redeem-btn btn btn-primary"  data-redeem-id="{{ prize.id }}">Redeem</button>
-                        <div id = 'confirmButtons' style="display: none;">
-                            <button class="cancel-btn btn btn-secondary">Cancel</button>
-                            <button href="{% url 'redeem' prize.id %}" class="confirm-btn btn btn-primary"  data-redeem-id="{{ discount.id }}">Redeem</button>
+                        <p class="card-text"><strong>Point : {{prize.point}} points</strong></p>
+                        <div id = 'confirm'  >
+                            <button class="redeem-btn btn btn-primary" value="{{prize.redeem_code}}" id="redeem_btn" name="{{prize.id}}">Redeem</button>
                         </div>
                         </div>
                     </div>

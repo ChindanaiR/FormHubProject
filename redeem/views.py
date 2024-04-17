@@ -53,7 +53,6 @@ def index(request):
 
 def redeem(request, redeem_id):
     # This function creates the transaction in RedeemTransaction
-
     transaction = RedeemTransaction(
         user_id = request.user,
         point = (-1) * RedeemItem.objects.get(id = redeem_id).point,
@@ -61,7 +60,11 @@ def redeem(request, redeem_id):
     )
     transaction.save()
 
-    # return JsonResponse({
-    #     'alert': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳'
-    # })
-    return HttpResponseRedirect(reverse("index"))
+
+    print(f"{request.user} Redeem {RedeemItem.objects.get(id = redeem_id).description}")
+    
+    return JsonResponse({
+        'alert': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳'
+    })
+
+    # return HttpResponseRedirect(reverse("index"))
