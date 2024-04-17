@@ -39,7 +39,8 @@
     }
 }
 
-& .close-btn {
+.close-btn,
+.sell-btn {
     font-size: 1.25rem;
     font-weight: bold;
 }

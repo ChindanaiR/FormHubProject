@@ -12,10 +12,14 @@
     <div class="card-cover p-3">
         <div class="header mb-3 d-flex">
             <div class="form-name p-2 d-flex align-items-center">
-                <i class="fa-solid fa-circle-dot status mx-2 {% if is_open %} active {% else %} closed {% endif %}"></i>
+                {% if not form.is_sale %}
+                    <i class="fa-solid fa-circle-dot status mx-2 {% if form.is_open %} active {% else %} closed {% endif %}"></i>
+                {% else %}
+                    <i class="fa-regular fa-money-bill-1 status mx-2"></i>
+                {% endif %}
                 <h3>{{ form_name }}</h3>
             </div>
-            {% if not is_open %}
+            {% if not form.is_open %}
                 <div class="download-data">
                     If there is close -> user will able to download their own dataset.
                 </div>
@@ -48,9 +52,19 @@
     </div>
 
     <div class="close-form d-flex align-items-center mt-3 justify-content-end">
-        <form action="#" method="post">
-            <button class="btn btn-primary close-btn">Close</button>
-        </form>
+        {% if form.is_open %}
+            <form action="{% url 'form_response' form.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="close-form">
+                <button class="btn btn-primary close-btn">Close</button>
+            </form>
+        {% elif not form.is_open and not form.is_sale %}
+            <form action="{% url 'form_response' form.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="sell-form">
+                <button class="btn btn-success sell-btn">Sell This!</button>
+            </form>
+        {% endif %}
     </div>
 
 </div>

@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("my-forms", views.my_forms, name="my-forms"),
+    path("my-forms", views.my_forms, name="my_forms"),
     path("responses/<int:form_id>", views.form_response, name="form_response"),
 
     # ----------------- API routes -----------------
