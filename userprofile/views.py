@@ -12,3 +12,27 @@ from .models import *
 
 def index(request):
     return render(request, "userprofile/index.html", {})
+
+
+# API
+def get_userinfo(request):  #ส่งข้อมูลไรบ้างไปยัง js
+    
+	if request.method == "GET":
+
+		user = User.objects.get(pk = request.user.id)
+		return JsonResponse({
+			"name":user.username,
+			"email":user.email,
+		})
+	
+
+def update_userinfo(request):
+	if request.method == "PUT":
+
+		user = User.objects.get(pk = request.user.id)
+		return JsonResponse({
+			"name":user.username,
+			"email":user.email
+		})
+
+
