@@ -1,16 +1,23 @@
-#user-prof {
-    width: 250px;
-    height: auto;
-    display: flex; /* Use Flexbox */
-    flex-direction: row; /* Arrange items vertically */
-    align-items: center; /* Center items horizontally */
-}
-
 #prof-pic {
     border-radius: 50%; 
     width: 200px; 
     height: 200px;
     margin-bottom:20px;
+}
+
+#user-prof {
+    max-width: 430px;
+}
+
+#acct_name, #email {
+    font-weight: bold;
+    font-size: large;
+}
+
+#rank-pic {
+    position: relative;
+    top: 50px;
+    left: 65px;
 }
 
 #user-prof-forms {
@@ -23,14 +30,3 @@
     background-color: #F4F4F4;
 }
 
-#rank-pic {
-    position: relative;
-    top: 50px;
-    left: 65px;
-}
-
-.basic-info {
-    display: flex; /* Use flexbox */
-    justify-content: space-between; 
-    margin-bottom: 3px;
-}

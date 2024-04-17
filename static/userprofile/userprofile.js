@@ -8,8 +8,8 @@
     console.log(data);
     const nameElement = document.querySelector('#acct_name');
     const emailElement = document.querySelector('#email');
-    nameElement.textContent = `Username : ${data.name}`;
-    emailElement.textContent = `Email : ${data.email}`;
+    nameElement.textContent = `Username: ${data.name}`;
+    emailElement.textContent = `Email: ${data.email}`;
   })
   
 
@@ -35,7 +35,7 @@ editButtons.addEventListener('click', function() {
                 alert(data.error);
             } else {
                 const nameElement = document.querySelector('#acct_name');
-                nameElement.textContent = `Username : ${newName}`;
+                nameElement.textContent = `Username: ${newName}`;
             }
         }).catch(error => {
           alert(error.message)
@@ -66,8 +66,8 @@ editButtons.addEventListener('click', function() {
               if (data.error) {
                   alert(data.error);
               } else {
-                  const nameElement = document.querySelector('#edit-mail');
-                  nameElement.textContent = `Email : ${newmail}`;
+                  const nameElement = document.querySelector('#email');
+                  nameElement.textContent = `Email: ${newmail}`;
               }
           })
       }

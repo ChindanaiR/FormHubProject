@@ -13,8 +13,11 @@ from .models import *
 
 def index(request):
     user = User.objects.get(pk = request.user.id)
-    return render(request, "userprofile/index.html", {"id":user.id,
-                                                      "userpic":user.profile_img})
+    user_forms = Form.objects.filter(owner = user)
+    return render(request, "userprofile/index.html", 
+                  {"id":user.id,
+                   "userpic":user.profile_img,
+                   "user_forms":user_forms})
 
 
 # API
