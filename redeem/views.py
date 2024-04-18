@@ -109,4 +109,10 @@ def redeem(request, redeem_id):
 
     # return HttpResponseRedirect(reverse("index"))
 
-# def dataset_page(request, )
+def preview_page(request, dataset_id):
+
+    dataset = Form.objects  
+
+    return render(request, "redeem/dataset.html", {
+
+    })

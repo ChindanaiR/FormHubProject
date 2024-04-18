@@ -121,7 +121,7 @@
                         <p class="card-text"><STRONG>Point : {{form.form_point}}</STRONG><p>
                     </div>
                     <div id = 'confirm'  >
-                        <a href="{{  }}"><button class="redeem-btn btn btn-success" dataset-id = "{{ form.id }}" value="FORM" name="{{prize.id}}">View more..</button></a>
+                        <a href="{% url 'preview_page' form.id %}"><button class="redeem-btn btn btn-success" dataset-id = "{{ form.id }}" value="FORM" name="{{prize.id}}">View more..</button></a>
                     </div>
                 </div>
                 {% empty %}
