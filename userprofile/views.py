@@ -13,16 +13,31 @@ from .models import *
 
 def index(request):
     user = User.objects.get(pk = request.user.id)
+
+    # User's created forms
     user_forms = Form.objects.filter(owner = user)
 
+    # Ranking
     responses = PointTransaction.objects.filter(user_id = user)
     num_responses = len(responses)
+
+    if num_responses >= 50:
+         rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-21-icon.png'
+    elif num_responses >= 25:
+         rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Diamond-4-icon.png'
+    else:
+         rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
+
+    # Bought Datasets
+    user_datasets = PointTransaction.objects.filter(user_id=user, point__lt = 0)
 
     return render(request, "userprofile/index.html", 
                   {"id":user.id,
                    "userpic":user.profile_img,
                    "user_forms":user_forms,
-                   "num_responses": num_responses})
+                   "rank": rank,
+                   "user_datasets": user_datasets}
+                   )
 
 
 # API

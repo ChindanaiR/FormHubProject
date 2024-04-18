@@ -15,14 +15,13 @@
     <div class="container mb-5" id="user-prof">
         <!-- picture profile -->
         <div class="container" style="display: flex; flex-direction: column; align-items: center;">
-            <img style="height: 70px; width: auto;" src="https://icons.iconarchive.com/icons/iconarchive/badge-trophy/512/Badge-Trophy-Emerald-icon.png" alt="rank-pic" id="rank-pic">
+            <img style="height: 70px; width: auto;" src="{{ rank }}" alt="rank-pic" id="rank-pic">
             <img id="prof-pic" src="/{{userpic}}" >
             
             <div class="input-group">
                 <input type="file" class="form-control" id="fileupload" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="uploadFile()">Button</button>
+                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="uploadFile()">Upload</button>
             </div>
-            <div>{{ num_responses }}</div>
         </div>
 
         <!-- username and email -->
@@ -61,6 +60,33 @@
                 </div>
             {% empty %}
                 <h3>No form</h3>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- user's bought datasets -->
+    <div class="container" id="user-prof-forms">
+        <h2><strong>User's Datasets</strong></h2>
+        <div class="all-forms d-flex flex-row flex-wrap">
+            {% for dataset in user_datasets %}
+                <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
+                    <div class="form p-2 d-flex flex-column">
+                        <div class="img-container d-flex justify-content-center">
+                            <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
+                        </div>
+                        <div class="form-meta-data mt-2 p-2">
+                            <h6 class="form-name">{{ datset.form_name }}</h6>
+                            <div class="description">
+                                {{ dataset.description }}
+                            </div>
+                            <!-- <div class="bottom-section mt-auto p-1">
+                                <span class="point">{{ .form_point }}</span><span class="unit">pts.</span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h3>No Dataset</h3>
             {% endfor %}
         </div>
     </div>
