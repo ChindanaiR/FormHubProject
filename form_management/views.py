@@ -63,19 +63,22 @@ def upload_pic(request):
     if request.method == "POST": 
 
         image_update = request.FILES.get("img")
-        print(image_update)
+        form_id = request.POST.get("formId") # รับ formId ที่ส่งมาจาก JavaScript
 
-    # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
         file_path = "static/answering/imgs"
-        print(file_path)
         
-        new_filename = f"{request.user.id}_{request.user.username}.jpg"  # ชื่อไฟล์ใหม่ที่คุณต้องการ
-        user.profile_img.save(new_filename, image_update)
-        user.save()
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
 
-        return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+        new_filename = f"{form_id}_formpic.jpg"  # ใช้ formId เป็นชื่อไฟล์
+        file_location = os.path.join(file_path, new_filename)
+
+        with open(file_location, 'wb') as destination:
+            for chunk in image_update.chunks():
+                destination.write(chunk)
     
-    return JsonResponse({"msg": "failed"})
+    return JsonResponse({"msg": "success"})
+    
 
 
 # =================================== APIs ===================================
@@ -103,6 +106,8 @@ def save_form(request):
             is_open = True,
         )
         form.save()
-        return JsonResponse({"msg": "Save successfuly"}, status = 201)
+
+
+        return JsonResponse({"msg": "Save successfuly", "formId": form.id}, status = 201)
     
     return JsonResponse({"error": "POST request is required."}, status = 400)
