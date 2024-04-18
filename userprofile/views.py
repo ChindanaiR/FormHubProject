@@ -93,7 +93,7 @@ def upload_pic(request):
         image_update = request.FILES.get("img")
         print(image_update)
 
-# ระบุตำแหน่งของไฟล์ที่ต้องการลบ
+    # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
         file_path = f"{request.user.profile_img}" 
         print(file_path)
         

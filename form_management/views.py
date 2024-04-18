@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
+import os
 
 from .models import *
 
@@ -54,6 +55,28 @@ def form_response(request, form_id):
         "records": form_responses,
         "form": form,
     })
+
+
+@csrf_exempt
+def upload_pic(request):
+    print("=" * 100)    
+    if request.method == "POST": 
+
+        image_update = request.FILES.get("img")
+        print(image_update)
+
+    # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
+        file_path = "static/answering/imgs"
+        print(file_path)
+        
+        new_filename = f"{request.user.id}_{request.user.username}.jpg"  # ชื่อไฟล์ใหม่ที่คุณต้องการ
+        user.profile_img.save(new_filename, image_update)
+        user.save()
+
+        return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+    
+    return JsonResponse({"msg": "failed"})
+
 
 # =================================== APIs ===================================
 

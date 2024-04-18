@@ -306,4 +306,22 @@ const addChoices = (elem) => {
     }
 }
 
+const uploadFile = () => {
+    const img = document.querySelector("#fileupload").files[0];
+
+    // console.log(img)
+    const formData = new FormData();
+    formData.append("img", img);
+    
+    fetch("upload", {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(() => {
+        location.reload();
+    });
+}
+
+
 // =================================================================================

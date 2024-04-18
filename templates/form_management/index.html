@@ -30,8 +30,18 @@
 
     <div class="design-container">
         <div class="form-detail card p-3">
+            <!-- upload form picture -->
+            <label for="form-pic">Upload Picture:</label>
+            <div class="input-group mb-2">
+                <input type="file" name="form-pic" id="fileupload" class="form-control form-pic" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="uploadFile()">Upload</button>
+            </div>
+
+            <!-- form name -->
             <label for="form-name">Form Name:</label>
             <input type="text" name="form-name" class="form-control mb-2 form-name" required>
+
+            <!-- form descr -->
             <label for="description">Description:</label>
             <textarea name="description" cols="30" rows="5" class="form-control form-descr"></textarea>
         </div>
