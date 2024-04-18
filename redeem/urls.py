@@ -5,4 +5,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("redeem/<int:redeem_id>", views.redeem, name="redeem"),
 
+    path("get_point/", views.get_point, name="get_point"),
+
 ]

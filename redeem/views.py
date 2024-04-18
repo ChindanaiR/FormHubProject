@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
-from django.db.models import Q
+from django.db.models import Q, Sum
 
 from .models import *
 
@@ -14,19 +14,22 @@ from .models import *
 def index(request):
 
     # Calculate total points
+    user_id = request.user.id
+    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
-
-    # # Code below doesnt work since the prizes returns Null so need to do the less efficient way
+    total_point = (f"{point_plus+point_negative:,}")
+        # # Code below doesnt work since the prizes returns Null so need to do the less efficient way
         # prizes = RedeemTransaction.objects.filter(
         #     Q(redeem__redeem_code = 'PRZ')
         # ).values_list('redeem_id', flat=True)
         # print(prizes)
     
     user = request.user
+    user_pic = User.objects.get(pk = request.user.id)
+
 
     # Show reamining points sum from both form response and redeem
-    points_formresponse = FormResponse.objects.filter(responder = user)
-    points_redeem = RedeemTransaction.objects.filter(user_id = user)
 
     # create new field to store points in FormResponse
     # remaining = sum(points_formresponse) + sum(points_redeem.point)
@@ -48,8 +51,19 @@ def index(request):
         # "remaining": remaining,
         "cash_options": cash_options,
         "unused_discounts": unused_discounts,
-        "unused_prizes": unused_prizes
+        "unused_prizes": unused_prizes,
+        "total_point":total_point,
+        "userpic":user_pic.profile_img
     })
+
+def get_point(request):
+    user_id = request.user.id
+    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+
+    total_point = point_plus+point_negative
+
+    return JsonResponse({'total_point': total_point})
 
 def redeem(request, redeem_id):
     # This function creates the transaction in RedeemTransaction
