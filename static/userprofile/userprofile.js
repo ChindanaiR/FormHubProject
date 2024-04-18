@@ -1,17 +1,12 @@
 
-//Show ในหน้า userprofile
-  // fetch(`get_userinfo`, {  
-  //   method: "GET",
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log(data);
-  //   const nameElement = document.querySelector('#acct_name');
-  //   const emailElement = document.querySelector('#email');
-  //   nameElement.textContent = `Username: ${data.name}`;
-  //   emailElement.textContent = `Email: ${data.email}`;
-  // })
-  
+document.addEventListener('DOMContentLoaded', () => {
+
+  document.querySelectorAll(".form-card").forEach(form => {
+    form.onclick = () => window.location.replace(`/manage/responses/${form.dataset.code}`)
+  })
+
+});
+
 
   //ปุ่ม Edit Name
   const editButtons = document.getElementById('edit-acct-name');
@@ -103,7 +98,5 @@ const uploadFile = () => {
   });
 }
 
-document.querySelectorAll(".form-card").forEach(form => {
-  form.onclick = () => window.location.replace(`/manage/responses/${form.dataset.code}`)
-})
+
 

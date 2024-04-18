@@ -45,7 +45,7 @@
 
     <!-- user's forms -->
     <div class="container" id="user-prof-forms">
-        <h2><strong>Your Published Forms</strong></h2>
+        <h2><strong>{{ form_section_title }}</strong></h2>
         <div class="all-forms d-flex flex-row flex-wrap">
             {% for form in user_forms %}
                 <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
@@ -54,7 +54,16 @@
                             <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
                         </div>
                         <div class="form-meta-data mt-2 p-2">
-                            <h6 class="form-name">{{ form.form_name }}</h6>
+                            <div class="header d-flex align-items-center mb-3">
+                                {% if form.owner.username == user.username %}
+                                    {% if not form.is_sale %}
+                                        <i class="fa-solid fa-circle-dot status me-2 {% if form.is_open %} active {% else %} closed {% endif %}"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-money-bill-1 status me-2"></i>
+                                    {% endif %}
+                                {% endif %}
+                                <h6 class="form-name my-0">{{ form.form_name }}</h6>
+                            </div>
                             <div class="description">
                                 {{ form.description }}
                             </div>
@@ -86,9 +95,6 @@
                                 <div class="description">
                                     {{ dataset.description }}
                                 </div>
-                                <!-- <div class="bottom-section mt-auto p-1">
-                                    <span class="point">{{ .form_point }}</span><span class="unit">pts.</span>
-                                </div> -->
                             </div>
                         </div>
                     </div>

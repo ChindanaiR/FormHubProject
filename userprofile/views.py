@@ -37,7 +37,8 @@ def index(request):
         "userpic": user.profile_img,
         "user_forms": user_forms,
         "rank": rank,
-        "user_datasets": user_datasets
+        "user_datasets": user_datasets,
+        "form_section_title": "Your Published Forms"
     })
 
 # View other userprofiles
@@ -45,7 +46,11 @@ def profile(request, user_id):
     
     if user_id:
         user = User.objects.get(pk = user_id)
-        user_forms = Form.objects.filter(owner = user, is_open = True)
+
+        if user_id == request.user.id:
+            user_forms = Form.objects.filter(owner = user)
+        else:
+            user_forms = Form.objects.filter(owner = user, is_open = True)
 
         # Ranking
         responses = PointTransaction.objects.filter(user_id = user)
@@ -63,6 +68,7 @@ def profile(request, user_id):
             "userpic": user.profile_img,
             "user_forms": user_forms,
             "rank": rank,
+            "form_section_title": "Opened Forms" if user_id != request.user.id else "Your Published Forms"
         })
     
     return HttpResponseRedirect("/")

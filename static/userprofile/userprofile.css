@@ -26,3 +26,11 @@
     background-color: #F4F4F4;
 }
 
+.active {
+    color: green;
+}
+
+.closed {
+    color: red;
+}
+

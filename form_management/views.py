@@ -28,6 +28,10 @@ def my_forms(request):
 def form_response(request, form_id):
 
     form = Form.objects.get(pk = form_id)
+
+    if request.user.username != form.owner.username:
+        return HttpResponseRedirect(f"/form/{form_id}")
+
     if request.method == "POST":
         action = request.POST["action"]
         if action.lower() == "close-form":
