@@ -12,10 +12,11 @@ from .models import *
 
 
 def index(request):
+    user = request.user
 
     # Calculate total points
     user_id = request.user.id
-    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    point_plus = PointTransaction.objects.filter(user_id_id = user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
     if (point_plus):
@@ -30,13 +31,23 @@ def index(request):
 
     total_point = (f"{point_plus+point_negative:,}")
 
+    # Ranking
+    responses = PointTransaction.objects.filter(user_id = user)
+    num_responses = len(responses)
+
+    if num_responses >= 50:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-21-icon.png'
+    elif num_responses >= 25:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Diamond-4-icon.png'
+    else:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
+
         # # Code below doesnt work since the prizes returns Null so need to do the less efficient way
         # prizes = RedeemTransaction.objects.filter(
         #     Q(redeem__redeem_code = 'PRZ')
         # ).values_list('redeem_id', flat=True)
         # print(prizes)
     
-    user = request.user
     user_pic = User.objects.get(pk = request.user.id)
 
 
@@ -69,7 +80,8 @@ def index(request):
         "unused_prizes": unused_prizes,
         "total_point":total_point,
         "userpic":user_pic.profile_img,
-        "form_sale":form_sale
+        "form_sale":form_sale,
+        "rank": rank
     })
 
 def get_point(request):
