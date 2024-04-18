@@ -31,11 +31,25 @@
             }
         }
 
+        & .download-data {
+            background-color: var(--card-trans-bg);
+            border-radius: .5rem;
+            width: 3.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        & .download-data:active {
+            opacity: .8;
+            transition: .2s;
+        }
+
     }
 
     & .card-trans {
         background-color: var(--card-trans-bg);
-        border-radius: .5rem;;
+        border-radius: .5rem;
+        overflow: auto;
     }
 }
 

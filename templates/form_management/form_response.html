@@ -20,8 +20,8 @@
                 <h3>{{ form_name }}</h3>
             </div>
             {% if not form.is_open %}
-                <div class="download-data">
-                    If there is close -> user will able to download their own dataset.
+                <div class="download-data d-flex justify-content-center align-items-center ms-2">
+                    <i class="fa-solid fa-download"></i>
                 </div>
             {% endif %}
         </div>
@@ -30,9 +30,9 @@
                 <table class="table table-hover">
                     <thead>
                         <th scope="col">#</th>
-                        <th scope="col">Responder</th>
+                        <th scope="col" class="header">Responder</th>
                         {% for question in questions %}
-                            <th scope="col">{{ question }}</th>
+                            <th scope="col" class="header">{{ question }}</th>
                         {% endfor %}
                     </thead>
                     <tbody>
@@ -72,5 +72,6 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="{% static 'form_management/form_response.js' %}" ></script>
 {% endblock %}
