@@ -14,10 +14,15 @@ from .models import *
 def index(request):
     user = User.objects.get(pk = request.user.id)
     user_forms = Form.objects.filter(owner = user)
+
+    responses = PointTransaction.objects.filter(user_id = user)
+    num_responses = len(responses)
+
     return render(request, "userprofile/index.html", 
                   {"id":user.id,
                    "userpic":user.profile_img,
-                   "user_forms":user_forms})
+                   "user_forms":user_forms,
+                   "num_responses": num_responses})
 
 
 # API
