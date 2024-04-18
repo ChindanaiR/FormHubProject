@@ -70,7 +70,9 @@ def index(request):
     unused_prizes = unused_redeems.filter(redeem_code = 'PRZ')
 
     # Form_sale
-    form_sale = Form.objects.filter(is_sale=True).exclude(owner=user)
+    bought_dataset = PointTransaction.objects.filter(Q(user_id = user) & Q(point__lt=0)).values_list("form_id_id", flat=True)
+    form_sale = Form.objects.filter(is_sale=True, is_open=False).exclude(Q(owner=user) | Q(id__in=bought_dataset))
+
     # print(form_sale)
 
     return render(request, "redeem/index.html", {
@@ -78,9 +80,9 @@ def index(request):
         "cash_options": cash_options,
         "unused_discounts": unused_discounts,
         "unused_prizes": unused_prizes,
-        "total_point":total_point,
-        "userpic":user_pic.profile_img,
-        "form_sale":form_sale,
+        "total_point": total_point,
+        "userpic": user_pic.profile_img,
+        "form_sale": form_sale,
         "rank": rank
     })
 
@@ -171,5 +173,41 @@ def preview_page(request, dataset_id):
         "questions": questions, 
         "records": form_responses,
         "form": form,
-        "user_point": total_point
+        "user_point": total_point,
+        
     })
+
+@csrf_exempt
+@login_required
+def buy_dataset(request):
+    
+    print("CALLED")
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        print(data["formId"])
+        form = Form.objects.get(pk = data["formId"])
+        response_num = FormResponse.objects.filter(form = form).count()
+        
+        point = 0
+        if response_num >= 5:
+            point = 200
+        elif response_num >= 3:
+            point = 100
+        else:
+            point = 50
+
+        transaction = PointTransaction(
+            user_id = request.user,
+            point = (-1) * point,
+            form_id = form
+        )
+        transaction.save()
+
+        return JsonResponse({
+            'msg': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳',
+            'success': True
+        }, status = 201)
+
+
+    return JsonResponse({ "msg": "POST request is required"})
