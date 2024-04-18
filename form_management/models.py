@@ -31,6 +31,10 @@ class Form(models.Model):
     is_open = models.BooleanField(default = False)
     is_sale = models.BooleanField(default = False)
     form_point = models.ForeignKey(Point, on_delete = models.CASCADE, related_name="form_point")
+    form_pic = models.ImageField(
+        upload_to="static/answering/imgs", 
+        null = True,
+        default = "static/answering/imgs/no-pic.png")
 
     def __str__(self):
         return f"{self.form_name} ({self.owner})"

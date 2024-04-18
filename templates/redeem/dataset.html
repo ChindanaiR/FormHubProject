@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'form_management/form_response.css' %}">
+    <link rel="stylesheet" href="{% static 'redeem/redeem.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="card-cover p-3">
+        <div class="header mb-3 d-flex">
+            <div class="form-name p-2 d-flex align-items-center">
+                <h3>{{ form_name }}</h3>
+            </div>
+            {% if not form.is_open %}
+                <div class="point-preview d-flex justify-content-center align-items-center ms-2 p-2">
+                    {{ user_point }}&nbsp;/&nbsp;{{ form.form_point}} 
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-trans p-3">
+            <div class="form-response">
+                <table class="table table-hover">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col" class="header">Responder</th>
+                        {% for question in questions %}
+                            <th scope="col" class="header">{{ question }}</th>
+                        {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ record.responder }}</td>
+                                {% for item in record.response %}
+                                    <td>{{ item.response }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary buy-btn mt-2">BUY</button>
+    </div>
+</div>
+
+<script src="{% static 'answering/index.js' %}"></script>
+{% endblock %}

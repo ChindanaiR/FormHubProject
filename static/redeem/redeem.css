@@ -71,11 +71,19 @@
     color: #333333;
 }
 
-.wrapper-discount, .wrapper-prize {
+.wrapper-cash, .wrapper-discount, .wrapper-prize {
     width: 340px;
     height: fit-content;
     overflow-x: scroll;
     display: flex;
     padding: 5px;
     /* background-color: #2196F3; */
+}
+
+.point-preview {
+    background-color: #FFC107;
+    color: black;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
