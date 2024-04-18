@@ -10,15 +10,35 @@ import os
 
 from .models import *
 
-
+@login_required
 def index(request):
     user = User.objects.get(pk = request.user.id)
+
+    # User's created forms
     user_forms = Form.objects.filter(owner = user)
-    return render(request, "userprofile/index.html", 
-                  {"id":user.id,
-                   "user": user,
-                   "userpic":user.profile_img,
-                   "user_forms":user_forms})
+
+    # Ranking
+    responses = PointTransaction.objects.filter(user_id = user)
+    num_responses = len(responses)
+
+    if num_responses >= 50:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-21-icon.png'
+    elif num_responses >= 25:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Diamond-4-icon.png'
+    else:
+        rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
+
+    # Bought Datasets
+    dataset_transaction = PointTransaction.objects.filter(user_id=user, point__lt = 0)
+    user_datasets = Form.objects.filter(id__in = dataset_transaction)
+
+    return render(request, "userprofile/index.html", {
+        "id":user.id,
+        "userpic":user.profile_img,
+        "user_forms":user_forms,
+        "rank": rank,
+        "user_datasets": user_datasets
+    })
 
 def profile(request, user_id):
     
@@ -88,7 +108,6 @@ def upload_pic(request):
 
         image_update = request.FILES.get("img")
         print(image_update)
-      
 
 # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
         file_path = f"{request.user.profile_img}" 
