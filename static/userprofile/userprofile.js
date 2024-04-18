@@ -44,7 +44,6 @@ editButtons.addEventListener('click', function() {
     }
 );
 
-            
   //ปุ่ม Edit mail
   const editmailButtons = document.getElementById('edit-mail');
   editmailButtons.addEventListener('click', function() {
@@ -74,9 +73,6 @@ editButtons.addEventListener('click', function() {
   });
 
 
-
-
-
 const getPic = () => {
   fetch("api/getpic", {
       method: "GET"
@@ -88,7 +84,6 @@ const getPic = () => {
       img.src = "/" + resp.img
   })
 }
-
 
 
 const uploadFile = () => {
@@ -108,17 +103,7 @@ const uploadFile = () => {
   });
 }
 
-// const displayPic = () => {
-//   fetch("api/getpic", {
-//       method: "GET",
-//   })
-//   .then(response => response.json())
-//   .then(resp => {
-//       console.log(resp.img)
-//       // const test_img = 'static/userprofile/imgs.jpg'
-//       // const img = document.getElementById('prof-pic')
-//       // img.src = `/${test_img}`;
-      
-//   })
-// }
+document.querySelectorAll(".form-card").forEach(form => {
+  form.onclick = () => window.location.replace(`/manage/responses/${form.dataset.code}`)
+})
 

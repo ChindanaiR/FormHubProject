@@ -7,3 +7,12 @@
 .hidden {
     display: none;
 }
+
+#form-detail, #card {
+    background-color: #CFCFCF !important;
+}
+
+#add-choices {
+    background-color: #2196F3;
+    border-color: #83add0;
+}
