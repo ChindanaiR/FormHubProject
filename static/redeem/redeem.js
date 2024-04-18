@@ -149,6 +149,15 @@ document.addEventListener('DOMContentLoaded', function() {
     //     })
     //   }
     //   getPic()
-     });
 
-     
+
+    // var datasetCards = document.querySelectorAll(".card-dst");
+    //     datasetCards.forEach(function(datasetCard) {
+    //         datasetCard.addEventListener('click', function() {
+    //             var datasetId = this.getAttribute('dataset-id');
+    //             console.log(datasetId)
+
+    //             fetch(`/dataset_page/${datasetId}/`)
+
+    // })
+});

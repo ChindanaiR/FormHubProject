@@ -107,20 +107,21 @@
             </div>
         </div>
 
+        <!-- FORM FOR SALES -->
         <div class="my-2">
             <div class="redeem-option">
                 form
             </div>
             <div class="wrapper-prize">
                 {% for form in form_sale %}
-                <div class="card mx-2" style="min-width: 12rem;">
+                <div class="card-dst mx-2" style="min-width: 12rem;">
                     <div class="card-body">
                         <p class="card-text" id="" data-point="">{{form.form_name}}</p>
                         <p class="card-text" id="" data-point="">owner:{{form.owner}}</p>
                         <p class="card-text"><STRONG>Point : {{form.form_point}}</STRONG><p>
                     </div>
                     <div id = 'confirm'  >
-                        <a  href="/account/"><button class="redeem-btn btn btn-success"   value="FORM" name="{{prize.id}}">View more..</button></a>
+                        <a href="{{  }}"><button class="redeem-btn btn btn-success" dataset-id = "{{ form.id }}" value="FORM" name="{{prize.id}}">View more..</button></a>
                     </div>
                 </div>
                 {% empty %}

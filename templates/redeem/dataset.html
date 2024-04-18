@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'answering/index.css' %}">
+{% endblock %}
+
+{% block body %}
+<h1>Hey!</h1>
+
+<script src="{% static 'answering/index.js' %}"></script>
+{% endblock %}
