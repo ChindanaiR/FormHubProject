@@ -84,6 +84,27 @@ def index(request):
         "rank": rank
     })
 
+@csrf_exempt
+def check_point(request):
+    user_id = request.user.id
+    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+
+    total_point = point_plus+point_negative
+    
+    if request.method == "POST":
+        json_data = request.body
+        data = json.loads(json_data)
+        item_id=data['redeem_id']
+        
+    point_item = RedeemItem.objects.get(id=item_id).point
+
+    if total_point>point_item:
+        return JsonResponse({'msg': "pass_check"})
+    else:
+        return JsonResponse({'msg':'fail_check'})
+    
+
 def get_point(request):
     user_id = request.user.id
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
@@ -100,8 +121,8 @@ def get_point(request):
         point_negative = 0
 
     total_point = point_plus+point_negative
+    return JsonResponse({'total_point':total_point})
 
-    return JsonResponse({'total_point': total_point})
 
 def redeem(request, redeem_id):
     # This function creates the transaction in RedeemTransaction

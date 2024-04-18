@@ -43,11 +43,18 @@ document.querySelector(".save").onclick = () => {
         .then(response => response.json())
         .then(response => {
             console.log(response)
-            document.querySelector(".modal-title").innerHTML = "Notice";
-            document.querySelector(".modal-body").innerHTML = "Do you want to publish this form?";
-            confirmBtn.classList.remove("hidden")
-            confirmBtn.onclick = () => window.location.replace("/")
-            $("#modal").modal("toggle");
+            if (response.msg === "Save successfuly") {
+                const formId = response.formId
+                console.log(response)
+                const uploaded = uploadFile(formId);
+                if (uploaded) {
+                    document.querySelector(".modal-title").innerHTML = "Notice";
+                    document.querySelector(".modal-body").innerHTML = "Do you want to publish this form?";
+                    confirmBtn.classList.remove("hidden")
+                    confirmBtn.onclick = () => window.location.replace("/")
+                    $("#modal").modal("toggle");
+                }
+            }
             
         })
         console.log("ALL CORRECT!")
@@ -306,20 +313,19 @@ const addChoices = (elem) => {
     }
 }
 
-const uploadFile = () => {
+const uploadFile = (formId) => {
     const img = document.querySelector("#fileupload").files[0];
-
-    // console.log(img)
     const formData = new FormData();
     formData.append("img", img);
-    
-    fetch("upload", {
+    formData.append("formId", formId); // เพิ่ม formId ลงใน FormData
+
+    return fetch("upload", {
         method: "POST",
         body: formData,
     })
     .then(response => response.json())
-    .then(() => {
-        location.reload();
+    .then(response => {
+        if (response.msg === "success") return true;
     });
 }
 
