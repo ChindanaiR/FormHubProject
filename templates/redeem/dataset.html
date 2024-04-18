@@ -8,5 +8,47 @@
 {% block body %}
 <h1>Hey!</h1>
 
+<div class="card-cover p-3">
+    <div class="header mb-3 d-flex">
+        <div class="form-name p-2 d-flex align-items-center">
+            {% if not form.is_sale %}
+                <i class="fa-solid fa-circle-dot status mx-2 {% if form.is_open %} active {% else %} closed {% endif %}"></i>
+            {% else %}
+                <i class="fa-regular fa-money-bill-1 status mx-2"></i>
+            {% endif %}
+            <h3>{{ form_name }}</h3>
+        </div>
+        {% if not form.is_open %}
+            <div class="download-data d-flex justify-content-center align-items-center ms-2">
+                <i class="fa-solid fa-download"></i>
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-trans p-3">
+        <div class="form-response">
+            <table class="table table-hover">
+                <thead>
+                    <th scope="col">#</th>
+                    <th scope="col" class="header">Responder</th>
+                    {% for question in questions %}
+                        <th scope="col" class="header">{{ question }}</th>
+                    {% endfor %}
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ record.responder }}</td>
+                            {% for item in record.response %}
+                                <td>{{ item.response }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script src="{% static 'answering/index.js' %}"></script>
 {% endblock %}
