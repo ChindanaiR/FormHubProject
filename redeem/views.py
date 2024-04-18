@@ -111,8 +111,32 @@ def redeem(request, redeem_id):
 
 def preview_page(request, dataset_id):
 
-    dataset = Form.objects  
+    # Get responses
+    form = Form.objects.get(pk = dataset_id)
+    form_responses = FormResponse.objects.filter(form = form)[:5]
+    questions = [section["question"] for section in form.design]
+
+    # Get total points
+    user_id = request.user.id
+    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+
+    if (point_plus):
+        point_plus
+    else:
+        point_plus = 0
+
+    if (point_negative):
+        point_negative
+    else:
+        point_negative = 0
+
+    total_point = point_plus+point_negative
 
     return render(request, "redeem/dataset.html", {
-
+        "form_name": form.form_name,
+        "questions": questions, 
+        "records": form_responses,
+        "form": form,
+        "user_point": total_point
     })
