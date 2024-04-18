@@ -1,11 +1,3 @@
-#user-prof {
-    width: 250px;
-    height: auto;
-    display: flex; /* Use Flexbox */
-    flex-direction: row; /* Arrange items vertically */
-    align-items: center; /* Center items horizontally */
-}
-
 #prof-pic {
     border-radius: 50%; 
     width: 200px; 
@@ -13,14 +5,13 @@
     margin-bottom:20px;
 }
 
-#user-prof-forms {
-    margin: 20px;
-    padding: 20px;
-    display: flex; /* Use Flexbox */
-    flex-direction: row; /*  Arrange items vertically */
-    align-items: flex-start; /* Center items horizontally */
-    border-radius: 6px;
-    background-color: #F4F4F4;
+#user-prof {
+    max-width: 430px;
+}
+
+#acct_name, #email {
+    font-weight: bold;
+    font-size: large;
 }
 
 #rank-pic {
@@ -29,8 +20,9 @@
     left: 65px;
 }
 
-.basic-info {
-    display: flex; /* Use flexbox */
-    justify-content: space-between; 
-    margin-bottom: 3px;
+#user-prof-forms {
+    margin: 20px;
+    padding: 20px;
+    background-color: #F4F4F4;
 }
+

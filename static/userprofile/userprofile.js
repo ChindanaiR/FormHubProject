@@ -1,36 +1,4 @@
 
-// const editButtons = document.querySelectorAll('.edit-button');
-
-// // Loop through each edit button
-// editButtons.forEach(button => {
-//     // Add click event listener
-//     button.addEventListener('click', function() {
-//         // Prompt user to enter new name
-//         const newName = prompt('Enter new name:');
-//         if (newName !== null && newName.trim() !== '') {
-//             // Update the corresponding name based on the button clicked
-//             const infoDiv = button.parentElement;
-//             const nameElement = infoDiv.querySelector('h4, h5');
-//             nameElement.textContent = newName;
-
-//             // Send a POST request to '/emails' to send the email
-//             fetch('/update-user-info', {
-//               method: 'POST',
-//               body: JSON.stringify({
-//                 new_name: newName
-//               })
-//             })
-//             .then(response => response.json())
-//             .then(result => {
-//               // Log the result
-//               console.log(result);
-//               // Once the email is sent, load the user's sent mailbox
-//               load_mailbox('sent');
-//             });
-//         }
-//     });
-// });
-
 //Show ในหน้า userprofile
   fetch(`get_userinfo`, {  
     method: "GET",
@@ -40,15 +8,117 @@
     console.log(data);
     const nameElement = document.querySelector('#acct_name');
     const emailElement = document.querySelector('#email');
-    nameElement.textContent = data.name;
-    emailElement.textContent = data.email
+    nameElement.textContent = `Username: ${data.name}`;
+    emailElement.textContent = `Email: ${data.email}`;
   })
-
   
-  fetch(`/emails/${email.id}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-        archived: !email.archived
-    })
+
+  //ปุ่ม Edit Name
+  const editButtons = document.getElementById('edit-acct-name');
+editButtons.addEventListener('click', function() {
+    // Prompt user to enter new name
+    const newName = prompt('Enter new name:');
+    if (newName !== null && newName.trim() !== '') {
+        console.log(newName);
+        fetch(`update_userinfo`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                username: newName
+            })
+        }).then(response => {     //จะแจ้งเตือนหากมีซ้ำ
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('username already exists');
+        }).then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                const nameElement = document.querySelector('#acct_name');
+                nameElement.textContent = `Username: ${newName}`;
+            }
+        }).catch(error => {
+          alert(error.message)
+        });
+        }
+    }
+);
+
+            
+  //ปุ่ม Edit mail
+  const editmailButtons = document.getElementById('edit-mail');
+  editmailButtons.addEventListener('click', function() {
+            // Prompt user to enter new name
+            const newmail = prompt('Enter new email:');
+            if (newmail !== null && newmail.trim() !== ''){
+            console.log(newmail)
+            fetch(`update_userinfo`, {  //ส่งค่าไปยัง views.py
+              method: 'PUT',
+              body: JSON.stringify({
+                  email: newmail
+              })
+            }).then(response => {
+              if (response.ok) {
+                  return response.json();
+              }
+              throw new Error('Email already exists');
+          }).then(data => {
+              if (data.error) {
+                  alert(data.error);
+              } else {
+                  const nameElement = document.querySelector('#email');
+                  nameElement.textContent = `Email: ${newmail}`;
+              }
+          })
+      }
+  });
+
+
+
+
+
+const getPic = () => {
+  fetch("api/getpic", {
+      method: "GET"
   })
-  .then(()=>{load_mailbox('archive')})
+  .then(response => response.json())
+  .then(resp => {
+      console.log(resp)
+      const img = document.querySelector("#prof-pic")
+      img.src = "/" + resp.img
+  })
+}
+
+
+
+const uploadFile = () => {
+  const img = document.querySelector("#fileupload").files[0];
+
+  // console.log(img)
+  const formData = new FormData();
+  formData.append("img", img);
+  
+  fetch("api/upload", {
+      method: "POST",
+      body: formData,
+  })
+  .then(response => response.json())
+  .then(() => {
+    location.reload();
+  });
+}
+
+// const displayPic = () => {
+//   fetch("api/getpic", {
+//       method: "GET",
+//   })
+//   .then(response => response.json())
+//   .then(resp => {
+//       console.log(resp.img)
+//       // const test_img = 'static/userprofile/imgs.jpg'
+//       // const img = document.getElementById('prof-pic')
+//       // img.src = `/${test_img}`;
+      
+//   })
+// }
+
