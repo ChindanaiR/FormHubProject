@@ -45,7 +45,8 @@ def form_response(request, form_id):
 
 
     form_responses = FormResponse.objects.filter(form = form)
-    questions = [resp["question"] for resp in form_responses[0].response]
+    questions = [section["question"] for section in form.design]
+        
 
     return render(request, "form_management/form_response.html", {
         "form_name": form.form_name,
