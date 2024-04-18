@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db.models import Q, Sum
-
+from form_management.models import Form
 from .models import *
 
 
@@ -18,7 +18,18 @@ def index(request):
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
+    if (point_plus):
+        point_plus
+    else:
+        point_plus = 0
+
+    if (point_negative):
+        point_negative
+    else:
+        point_negative = 0
+
     total_point = (f"{point_plus+point_negative:,}")
+
         # # Code below doesnt work since the prizes returns Null so need to do the less efficient way
         # prizes = RedeemTransaction.objects.filter(
         #     Q(redeem__redeem_code = 'PRZ')
@@ -47,19 +58,34 @@ def index(request):
     # PRIZES
     unused_prizes = unused_redeems.filter(redeem_code = 'PRZ')
 
+    # Form_sale
+    form_sale = Form.objects.filter(is_sale=True).exclude(owner=user)
+    # print(form_sale)
+
     return render(request, "redeem/index.html", {
         # "remaining": remaining,
         "cash_options": cash_options,
         "unused_discounts": unused_discounts,
         "unused_prizes": unused_prizes,
         "total_point":total_point,
-        "userpic":user_pic.profile_img
+        "userpic":user_pic.profile_img,
+        "form_sale":form_sale
     })
 
 def get_point(request):
     user_id = request.user.id
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+
+    if (point_plus):
+        point_plus
+    else:
+        point_plus = 0
+
+    if (point_negative):
+        point_negative
+    else:
+        point_negative = 0
 
     total_point = point_plus+point_negative
 
