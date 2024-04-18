@@ -16,9 +16,25 @@ def index(request):
     user_forms = Form.objects.filter(owner = user)
     return render(request, "userprofile/index.html", 
                   {"id":user.id,
+                   "user": user,
                    "userpic":user.profile_img,
                    "user_forms":user_forms})
 
+def profile(request, user_id):
+    
+    if user_id:
+        print(user_id)
+        user = User.objects.get(pk = user_id)
+        print(user)
+        user_forms = Form.objects.filter(owner = user)
+        return render(request, "userprofile/index.html", {
+            "id": user.id,
+            "userpic": user.profile_img,
+            "user_forms": user_forms
+        })
+    
+    return HttpResponseRedirect("/")
+    
 
 # API
 def get_userinfo(request):  #ส่งข้อมูลไรบ้างไปยัง js เพื่อโชว์หน้าเว็บ

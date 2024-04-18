@@ -18,7 +18,8 @@
                         <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
                     </div>
                     <div class="form-meta-data mt-2 p-2">
-                        <h6 class="form-name">{{ form.form_name }}</h6>
+                        <h4 class="form-name my-0">{{ form.form_name }}</h6>
+                        <a href="/account/{{ form.owner.id }}" class="mb-2 author">Published by <strong>{{ form.owner }}</strong></a>
                         <div class="description">
                             {{ form.description }}
                         </div>

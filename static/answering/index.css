@@ -36,6 +36,17 @@
             & .form-name {
                 font-weight: bold;
             }
+
+            & .author {
+                z-index: 1;
+                cursor: pointer;
+                text-decoration: none;
+                color: black
+            }
+
+            & .author:hover {
+                text-decoration: underline;
+            }
     
             & .description {
                 display: -webkit-box;
