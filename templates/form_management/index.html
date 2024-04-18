@@ -3,12 +3,13 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'form_management/main.css' %}">
+    <link rel="stylesheet" href="{% static 'form_management/form_mgt.css' %}">
 {% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1>Form Management</h1>
+    <h1><strong>Create New Form</strong></h1>
 
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="noticeModal" aria-hidden="true">
         <div class="modal-dialog">
@@ -50,8 +51,8 @@
         </section>
     </div>
 
-    <button class="add-section">Add Section</button>
-    <button class="save">Save</button>
+    <button class="add-section btn btn-secondary">Add Section</button>
+    <button class="save btn btn-primary">Save</button>
 
 
 </div>

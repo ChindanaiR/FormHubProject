@@ -14,7 +14,7 @@
 }
 
 .login-form {
-    width: 350px;
+    width: auto;
     height: auto;
     background-color: #4CAF50;
     margin: 20px; /* This centers the element both horizontally and vertically */

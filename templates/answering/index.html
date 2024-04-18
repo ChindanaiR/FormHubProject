@@ -8,7 +8,7 @@
 {% block body %}
 
 <div class="container">
-    <h1>{{ title }}</h1>
+    <h1><strong>All Forms</strong></h1>
 
     <div class="all-forms d-flex flex-row flex-wrap">
         {% for form in forms %}
@@ -36,5 +36,5 @@
 </div>
 
 
-<script src="{% static 'answering/index.js' %}"></script>
+<script src="{% static 'answering/index.css' %}"></script>
 {% endblock %}

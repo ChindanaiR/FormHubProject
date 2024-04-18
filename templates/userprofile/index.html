@@ -1,9 +1,67 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'userprofile/userprofile.css' %}">
+{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1>User Profile</h1>
+    <div class="row justify-content-center">
+
+        <div class="col-4 mx-2 container d-flex flex-column justify-content-center align-items-center" id="user-prof">
+            <img style="height: 70px; width: auto;" src="https://icons.iconarchive.com/icons/iconarchive/badge-trophy/512/Badge-Trophy-Emerald-icon.png" alt="rank-pic" id="rank-pic">
+            <img id="prof-pic" src="https://pbs.twimg.com/media/EOHvlzOXUAAScN5.jpg">
+
+            <div class="mx-1 basic-point-card" id="your-rank" style="text-align: left; height: auto; width: 210px;">
+
+                <div class="basic-info">
+                    <h4 id="acct_name"><strong>Account Name</strong></h4>
+                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" style="--bs-btn-padding-y: .25rem; ; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" id="edit-acct-name">Edit</button>
+                </div>
+                <div class="basic-info">
+                    <h5 id="email">User Name</h5>
+                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-acct-name">Edit</button>
+                </div>
+                
+            </div>
+
+        </div>
+
+        <div class="container-fluid d-flex flex-column justify-content-center" id="user-prof-forms">
+            <h2><strong>User's Published Forms</strong></h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for form in forms %}
+                    <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
+                        <div class="form p-2 d-flex flex-column">
+                            <div class="img-container d-flex justify-content-center">
+                                <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
+                            </div>
+                            <div class="form-meta-data mt-2 p-2">
+                                <h6 class="form-name">{{ form.form_name }}</h6>
+                                <div class="description">
+                                    {{ form.description }}
+                                </div>
+                                <div class="bottom-section mt-auto p-1">
+                                    <span class="point">{{ form.form_point }}</span><span class="unit">pts.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h3>No form</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
+
+{% block extra_js %}
+    <!-- JAVA LOCAL -->
+    <script src="{% static 'userprofile/userprofile.js' %}"></script>
+{% endblock %}
 
 {% endblock %}
