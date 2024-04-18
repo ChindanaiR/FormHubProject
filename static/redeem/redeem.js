@@ -62,9 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     }
 
-    
-     });
-
 
     // var datasetCards = document.querySelectorAll(".card-dst");
     //     datasetCards.forEach(function(datasetCard) {
