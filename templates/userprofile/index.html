@@ -27,11 +27,11 @@
         <!-- username and email -->
         <div class="basics container my-2" id="your-rank">
             <div class="basic-info d-flex justify-content-between mb-1">
-                <div id="acct_name">Username</div>
+                <div id="acct_name">Username: {{ user_profile.username }}</div>
                 <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-acct-name">Edit</button>
             </div>
             <div class="basic-info d-flex justify-content-between mb-1">
-                <div id="email">Email</div>
+                <div id="email">Email: {{ user_profile.email }}</div>
                 <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-mail">Edit</button>
             </div>
         </div>
@@ -65,31 +65,33 @@
     </div>
 
     <!-- user's bought datasets -->
-    <div class="container" id="user-prof-forms">
-        <h2><strong>Your Datasets</strong></h2>
-        <div class="all-forms d-flex flex-row flex-wrap">
-            {% for dataset in user_datasets %}
-                <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
-                    <div class="form p-2 d-flex flex-column">
-                        <div class="img-container d-flex justify-content-center">
-                            <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
-                        </div>
-                        <div class="form-meta-data mt-2 p-2">
-                            <h6 class="form-name">{{ datset.form_name }}</h6>
-                            <div class="description">
-                                {{ dataset.description }}
+    {% if user_profile.username == user.username and user_datasets %}
+        <div class="container" id="user-prof-forms">
+            <h2><strong>Your Datasets</strong></h2>
+            <div class="all-forms d-flex flex-row flex-wrap">
+                {% for dataset in user_datasets %}
+                    <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
+                        <div class="form p-2 d-flex flex-column">
+                            <div class="img-container d-flex justify-content-center">
+                                <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
                             </div>
-                            <!-- <div class="bottom-section mt-auto p-1">
-                                <span class="point">{{ .form_point }}</span><span class="unit">pts.</span>
-                            </div> -->
+                            <div class="form-meta-data mt-2 p-2">
+                                <h6 class="form-name">{{ datset.form_name }}</h6>
+                                <div class="description">
+                                    {{ dataset.description }}
+                                </div>
+                                <!-- <div class="bottom-section mt-auto p-1">
+                                    <span class="point">{{ .form_point }}</span><span class="unit">pts.</span>
+                                </div> -->
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% empty %}
-                <h3>No Dataset</h3>
-            {% endfor %}
+                {% empty %}
+                    <h3>No Dataset</h3>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endif %}
 </div>
 
 {% block extra_js %}

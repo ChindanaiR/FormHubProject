@@ -33,40 +33,52 @@ def index(request):
     user_datasets = Form.objects.filter(id__in = dataset_transaction)
 
     return render(request, "userprofile/index.html", {
-        "id":user.id,
-        "userpic":user.profile_img,
-        "user_forms":user_forms,
+        "user_profile": user,
+        "userpic": user.profile_img,
+        "user_forms": user_forms,
         "rank": rank,
         "user_datasets": user_datasets
     })
 
+# View other userprofiles
 def profile(request, user_id):
     
     if user_id:
-        print(user_id)
         user = User.objects.get(pk = user_id)
-        print(user)
-        user_forms = Form.objects.filter(owner = user)
+        user_forms = Form.objects.filter(owner = user, is_open = True)
+
+        # Ranking
+        responses = PointTransaction.objects.filter(user_id = user)
+        num_responses = len(responses)
+
+        if num_responses >= 50:
+            rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-21-icon.png'
+        elif num_responses >= 25:
+            rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Diamond-4-icon.png'
+        else:
+            rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
+
         return render(request, "userprofile/index.html", {
-            "id": user.id,
+            "user_profile": user,
             "userpic": user.profile_img,
-            "user_forms": user_forms
+            "user_forms": user_forms,
+            "rank": rank,
         })
     
     return HttpResponseRedirect("/")
     
 
-# API
-def get_userinfo(request):  #ส่งข้อมูลไรบ้างไปยัง js เพื่อโชว์หน้าเว็บ
+# # API
+# def get_userinfo(request):  #ส่งข้อมูลไรบ้างไปยัง js เพื่อโชว์หน้าเว็บ
     
-	if request.method == "GET":
+# 	if request.method == "GET":
 
-		user = User.objects.get(pk = request.user.id)
-		return JsonResponse({
-            "id":user.id,
-			"name":user.username,
-			"email":user.email,
-		})
+# 		user = User.objects.get(pk = request.user.id)
+# 		return JsonResponse({
+#             "id":user.id,
+# 			"name":user.username,
+# 			"email":user.email,
+# 		})
 	
 
 

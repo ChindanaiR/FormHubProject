@@ -1,16 +1,16 @@
 
 //Show ในหน้า userprofile
-  fetch(`get_userinfo`, {  
-    method: "GET",
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    const nameElement = document.querySelector('#acct_name');
-    const emailElement = document.querySelector('#email');
-    nameElement.textContent = `Username: ${data.name}`;
-    emailElement.textContent = `Email: ${data.email}`;
-  })
+  // fetch(`get_userinfo`, {  
+  //   method: "GET",
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   console.log(data);
+  //   const nameElement = document.querySelector('#acct_name');
+  //   const emailElement = document.querySelector('#email');
+  //   nameElement.textContent = `Username: ${data.name}`;
+  //   emailElement.textContent = `Email: ${data.email}`;
+  // })
   
 
   //ปุ่ม Edit Name
