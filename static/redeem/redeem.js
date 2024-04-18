@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (redeemBtn.value == 'CSH'){
                 }
                 else {
-                    redeemBtn.remove();
+                    console.log("test")
                 }
                     
             }
