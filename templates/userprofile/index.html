@@ -18,21 +18,27 @@
             <img style="height: 70px; width: auto;" src="{{ rank }}" alt="rank-pic" id="rank-pic">
             <img id="prof-pic" src="/{{userpic}}" >
             
-            <div class="input-group">
-                <input type="file" class="form-control" id="fileupload" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="uploadFile()">Upload</button>
-            </div>
+            {% if user_profile.username == user.username %}
+                <div class="input-group">
+                    <input type="file" class="form-control" id="fileupload" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="uploadFile()">Upload</button>
+                </div>
+            {% endif %}
         </div>
 
         <!-- username and email -->
         <div class="basics container my-2" id="your-rank">
             <div class="basic-info d-flex justify-content-between mb-1">
                 <div id="acct_name">Username: {{ user_profile.username }}</div>
-                <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-acct-name">Edit</button>
+                {% if user_profile.username == user.username %}
+                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-acct-name">Edit</button>
+                {% endif %}
             </div>
             <div class="basic-info d-flex justify-content-between mb-1">
                 <div id="email">Email: {{ user_profile.email }}</div>
-                <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-mail">Edit</button>
+                {% if user_profile.username == user.username %}
+                    <button type="button" class="btn btn-outline-secondary btn-sm edit-button" id="edit-mail">Edit</button>
+                {% endif %}
             </div>
         </div>
     </div>
