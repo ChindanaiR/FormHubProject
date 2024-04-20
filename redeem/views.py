@@ -92,13 +92,19 @@ def check_point(request):
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
-    total_point = point_plus+point_negative
     
     if request.method == "POST":
         json_data = request.body
         data = json.loads(json_data)
         item_id=data['redeem_id']
+
+    if not(point_plus):
+        point_plus = 0
+
+    if not(point_negative):
+        point_negative = 0
         
+    total_point = point_plus+point_negative
     point_item = RedeemItem.objects.get(id=item_id).point
 
     if total_point>point_item:
@@ -112,14 +118,10 @@ def get_point(request):
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
-    if (point_plus):
-        point_plus
-    else:
+    if not(point_plus):
         point_plus = 0
 
-    if (point_negative):
-        point_negative
-    else:
+    if not(point_negative):
         point_negative = 0
 
     total_point = point_plus+point_negative
@@ -156,14 +158,10 @@ def preview_page(request, dataset_id):
     point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
     point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
-    if (point_plus):
-        point_plus
-    else:
+    if not(point_plus):
         point_plus = 0
 
-    if (point_negative):
-        point_negative
-    else:
+    if not(point_negative):
         point_negative = 0
 
     total_point = point_plus+point_negative
