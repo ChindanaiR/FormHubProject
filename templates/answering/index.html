@@ -16,7 +16,7 @@
                 <div class="form p-2 d-flex flex-column">
                     <div class="img-container d-flex justify-content-center">
                         
-                        <img id="form_pic_{{form.id}}" data-code="{{ form.id }}" src="{% static 'answering/imgs/' %}{{ form.id }}_formpic.jpg" alt="no-photo">
+                        <img id="form_pic_{{form.id}}" data-code="{{ form.id }}" src="{{ form.form_pic }}" alt="no-photo">
                     </div>
                     <div class="form-meta-data mt-2 p-2">
                         <h4 class="form-name my-0">{{ form.form_name }}</h6>

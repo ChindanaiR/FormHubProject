@@ -35,29 +35,11 @@ document.querySelector(".save").onclick = () => {
     const validateResult = validateForm();
     const confirmBtn = document.querySelector(".confirm");
     if (validateResult.isValid) {
-        const form = getFormDesign()
-        fetch("save_form/", {
-            method: "POST",
-            body: JSON.stringify(form)
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response)
-            if (response.msg === "Save successfuly") {
-                const formId = response.formId
-                console.log(response)
-                const uploaded = uploadFile(formId);
-                if (uploaded) {
-                    document.querySelector(".modal-title").innerHTML = "Notice";
-                    document.querySelector(".modal-body").innerHTML = "Do you want to publish this form?";
-                    confirmBtn.classList.remove("hidden")
-                    confirmBtn.onclick = () => window.location.replace("/")
-                    $("#modal").modal("toggle");
-                }
-            }
-            
-        })
-        console.log("ALL CORRECT!")
+        document.querySelector(".modal-title").innerHTML = "Notice";
+        document.querySelector(".modal-body").innerHTML = "Do you want to publish this form?";
+        confirmBtn.classList.remove("hidden")
+        confirmBtn.onclick = () => publishForm();
+        $("#modal").modal("toggle");
     } else {
         console.log("Something went wrong")
         document.querySelector(".modal-title").innerHTML = "Something went wrong.";
@@ -71,6 +53,36 @@ document.querySelector(".save").onclick = () => {
         })
         $("#modal").modal("toggle");
     }
+}
+
+const publishForm = () => {
+
+    const form = getFormDesign()
+
+    fetch("save_form/", {
+        method: "POST",
+        body: JSON.stringify(form),
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log(response)
+        if (response.msg === "Save successfuly") {
+            const formId = response.formId
+            console.log(response)
+            const uploaded = uploadFile(formId);
+            if (!uploaded) {
+                document.querySelector(".modal-title").innerHTML = "Something went wrong.";
+                confirmBtn.classList.add("hidden");
+                $("#modal").modal("toggle");
+            }
+            window.location.assign("/") 
+        } else {
+            document.querySelector(".modal-title").innerHTML = "Something went wrong.";
+            confirmBtn.classList.add("hidden");
+            $("#modal").modal("toggle");
+        }
+    })
+
 }
 
 
@@ -315,6 +327,9 @@ const addChoices = (elem) => {
 
 const uploadFile = (formId) => {
     const img = document.querySelector("#fileupload").files[0];
+
+    if (!img) return true; // Mean that user are not upload photo, so we don't need to upload any photo
+    
     const formData = new FormData();
     formData.append("img", img);
     formData.append("formId", formId); // เพิ่ม formId ลงใน FormData
@@ -326,6 +341,7 @@ const uploadFile = (formId) => {
     .then(response => response.json())
     .then(response => {
         if (response.msg === "success") return true;
+        else return false;
     });
 }
 

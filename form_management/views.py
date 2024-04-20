@@ -60,31 +60,6 @@ def form_response(request, form_id):
         "form": form,
     })
 
-
-@csrf_exempt
-def upload_pic(request):
-    print("=" * 100)    
-    if request.method == "POST": 
-
-        image_update = request.FILES.get("img")
-        form_id = request.POST.get("formId") # รับ formId ที่ส่งมาจาก JavaScript
-
-        file_path = "static/answering/imgs"
-        
-        if not os.path.exists(file_path):
-            os.makedirs(file_path)
-
-        new_filename = f"{form_id}_formpic.jpg"  # ใช้ formId เป็นชื่อไฟล์
-        file_location = os.path.join(file_path, new_filename)
-
-        with open(file_location, 'wb') as destination:
-            for chunk in image_update.chunks():
-                destination.write(chunk)
-    
-    return JsonResponse({"msg": "success"})
-    
-
-
 # =================================== APIs ===================================
 
 
@@ -115,3 +90,32 @@ def save_form(request):
         return JsonResponse({"msg": "Save successfuly", "formId": form.id}, status = 201)
     
     return JsonResponse({"error": "POST request is required."}, status = 400)
+
+
+@csrf_exempt
+def upload_pic(request):
+    print("=" * 100)    
+    if request.method == "POST": 
+
+        image_update = request.FILES.get("img")
+        form_id = request.POST.get("formId") # รับ formId ที่ส่งมาจาก JavaScript
+
+        file_path = "static/form_management/imgs"
+        
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+
+        new_filename = f"{form_id}_formpic.jpg"  # ใช้ formId เป็นชื่อไฟล์
+        file_location = os.path.join(file_path, new_filename)
+
+        with open(file_location, 'wb') as destination:
+            for chunk in image_update.chunks():
+                destination.write(chunk)
+
+        # Update the current file dir.
+        form = Form.objects.get(pk = form_id)
+        form.form_pic = file_location
+        form.save()
+    
+    return JsonResponse({"msg": "success"})
+    
