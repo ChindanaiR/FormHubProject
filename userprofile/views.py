@@ -128,16 +128,16 @@ def upload_pic(request):
             image_update = request.FILES.get("img")
             print(image_update)
             if not image_update:
-                return JsonResponse({"msg": "No Image"})
+                return JsonResponse({"msg": "No picture is sent."})
 
-        # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
+            # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
             file_path = f"{request.user.profile_img}" 
+            default_path = "static/userprofile/imgs/default.jpg"
             print(file_path)
-
-            if os.path.exists(file_path):
-        # ลบไฟล์
+            
+            if os.path.exists(file_path) and file_path != default_path:
+            # ลบไฟล์
                 os.remove(file_path)
-                user.profile_img = file_path + "del"
                 print("ไฟล์ถูกลบแล้ว")
             else:
                 print("ไม่พบไฟล์ที่ต้องการลบ")
