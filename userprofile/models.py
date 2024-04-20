@@ -1,5 +1,5 @@
 from django.db import models
-from form_management.models import Form
+from form_management.models import Form, FormResponse
 from authentication.models import User
 
 class PointTransaction(models.Model):

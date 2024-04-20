@@ -16,7 +16,7 @@
         <!-- picture profile -->
         <div class="container" style="display: flex; flex-direction: column; align-items: center;">
             <img style="height: 70px; width: auto;" src="{{ rank }}" alt="rank-pic" id="rank-pic">
-            <img id="prof-pic" src="/{{userpic}}" >
+            <img id="prof-pic" src="/{{ user_profile.profile_img }}" >
             
             {% if user_profile.username == user.username %}
                 <div class="input-group">
@@ -51,7 +51,7 @@
                 <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
                     <div class="form p-2 d-flex flex-column">
                         <div class="img-container d-flex justify-content-center">
-                            <img id="form_pic_{{form.id}}" data-code="{{ form.id }}" src="{% static 'answering/imgs/' %}{{ form.id }}_formpic.jpg" alt="no-photo">
+                            <img data-code="{{ form.id }}" src="/{{ form.form_pic }}" alt="no-photo">
                         </div>
                         <div class="form-meta-data mt-2 p-2">
                             <div class="header d-flex align-items-center mb-3">

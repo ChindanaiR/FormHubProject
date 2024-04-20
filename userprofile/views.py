@@ -34,7 +34,6 @@ def index(request):
 
     return render(request, "userprofile/index.html", {
         "user_profile": user,
-        "userpic": user.profile_img,
         "user_forms": user_forms,
         "rank": rank,
         "user_datasets": user_datasets,
@@ -50,7 +49,9 @@ def profile(request, user_id):
         if user_id == request.user.id:
             user_forms = Form.objects.filter(owner = user)
         else:
-            user_forms = Form.objects.filter(owner = user, is_open = True)
+            is_already_answered_form = FormResponse.objects.filter(responder = request.user).values("form_id").distinct()
+            exclude_form_list = [item["form_id"] for item in is_already_answered_form]
+            user_forms = Form.objects.filter(owner = user, is_open = True).exclude(id__in=exclude_form_list)
 
         # Ranking
         responses = PointTransaction.objects.filter(user_id = user)
@@ -121,29 +122,34 @@ def update_userinfo(request):
 
 @csrf_exempt
 def upload_pic(request):
-    print("=" * 100)    
+    print("=" * 100) 
     if request.method == "POST": 
+        try:
+            image_update = request.FILES.get("img")
+            print(image_update)
+            if not image_update:
+                return JsonResponse({"msg": "No Image"})
 
-        image_update = request.FILES.get("img")
-        print(image_update)
+        # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
+            file_path = f"{request.user.profile_img}" 
+            print(file_path)
 
-    # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
-        file_path = f"{request.user.profile_img}" 
-        print(file_path)
-        
-        if os.path.exists(file_path):
-    # ลบไฟล์
-            os.remove(file_path)
-            print("ไฟล์ถูกลบแล้ว")
-        else:
-            print("ไม่พบไฟล์ที่ต้องการลบ")
+            if os.path.exists(file_path):
+        # ลบไฟล์
+                os.remove(file_path)
+                user.profile_img = file_path + "del"
+                print("ไฟล์ถูกลบแล้ว")
+            else:
+                print("ไม่พบไฟล์ที่ต้องการลบ")
 
-        user = request.user
-        new_filename = f"{request.user.id}_{request.user.username}.jpg"  # ชื่อไฟล์ใหม่ที่คุณต้องการ
-        user.profile_img.save(new_filename, image_update)
-        user.save()
+            user = request.user
+            new_filename = f"{request.user.id}_{request.user.username}.jpg"  # ชื่อไฟล์ใหม่ที่คุณต้องการ
+            user.profile_img.save(new_filename, image_update)
+            user.save()
 
-        return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+            return JsonResponse({"img": str(request.user.profile_img)}, status = 200)
+        except:
+            return JsonResponse({"msg": "failed"})
     
     return JsonResponse({"msg": "failed"})
 
