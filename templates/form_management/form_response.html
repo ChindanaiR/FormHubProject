@@ -19,6 +19,9 @@
                 {% endif %}
                 <h3>{{ form_name }}</h3>
             </div>
+            <div class="form-responses d-flex justify-content-center align-items-center flex-row ms-2 p-3">
+                <label for="rows">{{ records.count }}&nbsp;{% if records.count <= 1 %}Row{% else %}Rows{% endif %}</label>
+            </div>
             {% if not form.is_open %}
                 <div class="download-data d-flex justify-content-center align-items-center ms-2">
                     <i class="fa-solid fa-download"></i>
@@ -62,7 +65,7 @@
             <form action="{% url 'form_response' form.id %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="sell-form">
-                <button class="btn btn-success sell-btn">Sell This!</button>
+                <button class="btn btn-success sell-btn" {% if records.count == 0 %} disabled {% endif %}>Sell This!</button>
             </form>
         {% endif %}
     </div>
@@ -72,6 +75,6 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script> <!-- Script for exporting as .xlsn file -->
     <script src="{% static 'form_management/form_response.js' %}" ></script>
 {% endblock %}

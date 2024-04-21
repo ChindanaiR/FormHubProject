@@ -1,3 +1,4 @@
+// Export html table to Excel file.
 document.querySelector(".download-data").addEventListener("click", function () {
     const table = document.querySelector("table");
     const rows = table.querySelectorAll("tr");

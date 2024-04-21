@@ -31,6 +31,15 @@
             }
         }
 
+        & .form-responses {
+            background-color: #FFC107;
+            color: black;
+            border-radius: .5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 3rem;
+        }
+
         & .download-data {
             background-color: var(--card-trans-bg);
             border-radius: .5rem;

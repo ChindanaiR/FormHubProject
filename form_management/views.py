@@ -16,17 +16,7 @@ from .models import *
 def index(request):
     return render(request, "form_management/index.html", {})
 
-
-@login_required
-def my_forms(request):
-
-    forms = Form.objects.filter(owner = request.user)
-    return render(request, "form_management/myforms.html", {
-        "title": "My Forms",
-		"forms": forms
-	})
-
-
+@csrf_exempt
 @login_required
 def form_response(request, form_id):
 
