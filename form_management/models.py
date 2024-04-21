@@ -36,6 +36,7 @@ class Form(models.Model):
     is_open = models.BooleanField(default = False)
     is_sale = models.BooleanField(default = False)
     form_point = models.ForeignKey(Point, on_delete = models.CASCADE, related_name="form_point")
+    form_selling_point = models.ForeignKey(Point, on_delete = models.CASCADE, null = True, blank = True, related_name="form_selling_point")
     form_pic = models.ImageField(
         upload_to="static/form_management/imgs", 
         null = True,

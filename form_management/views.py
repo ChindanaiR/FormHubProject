@@ -44,7 +44,13 @@ def form_response(request, form_id):
             if form.is_open:
                 return HttpResponseRedirect(reverse("form_response", args=(form_id,)))
             
+            response_count = FormResponse.objects.filter(form = form).count()
+            points = Point.objects.filter(context = "SEL")
+            selling_point = [point for point in points if point.lower_bound <= response_count <= point.upper_bound]
+            selling_point = selling_point[0] if selling_point else 0 # make sure that the question number in the boundary, or not less than zero
+
             form.is_sale = True
+            form.form_selling_point = selling_point
             form.save()
             return HttpResponseRedirect(reverse("form_response", args=(form_id,)))
 

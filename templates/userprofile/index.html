@@ -88,10 +88,10 @@
                     <div class="form-card p-2 d-flex flex-column col-sm-6 col-md-4 col-lg-3" data-code="{{ form.id }}">
                         <div class="form p-2 d-flex flex-column">
                             <div class="img-container d-flex justify-content-center">
-                                <img src="{% static 'answering/imgs/no-pic.png' %}" alt="no-photo">
+                                <img src="/{{ dataset.form_pic }}" alt="no-photo">
                             </div>
                             <div class="form-meta-data mt-2 p-2">
-                                <h6 class="form-name">{{ datset.form_name }}</h6>
+                                <h6 class="form-name">{{ dataset.form_name }}</h6>
                                 <div class="description">
                                     {{ dataset.description }}
                                 </div>
@@ -107,7 +107,7 @@
 </div>
 
 {% block extra_js %}
-    <!-- JAVA LOCAL -->
+    <!-- JAVASCRIPT LOCAL -->
     <script src="{% static 'userprofile/userprofile.js' %}"></script>
 {% endblock %}
 
