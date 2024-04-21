@@ -74,8 +74,9 @@ const publishForm = () => {
                 document.querySelector(".modal-title").innerHTML = "Something went wrong.";
                 confirmBtn.classList.add("hidden");
                 $("#modal").modal("toggle");
+            } else {
+                window.location.assign("/") 
             }
-            window.location.assign("/") 
         } else {
             document.querySelector(".modal-title").innerHTML = "Something went wrong.";
             confirmBtn.classList.add("hidden");

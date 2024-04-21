@@ -72,7 +72,7 @@ def save_form(request):
         num_of_questions = len(data["design"])
         print(num_of_questions)
 
-        points = Point.objects.all()
+        points = Point.objects.filter(context = "ANS")
         point = [point for point in points if point.lower_bound <= num_of_questions <= point.upper_bound][0]
         print(point.id)
 

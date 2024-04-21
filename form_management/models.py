@@ -1,16 +1,21 @@
 from django.db import models
 from authentication.models import User
 
+POINT_CONTEXT = (
+    ("SEL", "Selling"),
+    ("ANS", "Answering")
+)
 
 class Point(models.Model):
     form_size = models.CharField(max_length = 2)
+    context = models.CharField(max_length = 3, null = True, blank = True, choices = POINT_CONTEXT) # SEL = Selling, ANS = answering
     point = models.IntegerField()
-    description = models.CharField(max_length = 50, null = True)
+    description = models.CharField(max_length = 50, null = True, blank = True)
     lower_bound = models.IntegerField()
     upper_bound = models.IntegerField()
 
     def __str__(self):
-        return f"{self.point}"
+        return f"{self.context}: {self.point} ({self.lower_bound} - {self.upper_bound} Questions)"
 
 
 class Category(models.Model):
