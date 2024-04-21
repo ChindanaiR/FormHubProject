@@ -106,7 +106,7 @@ def check_point(request):
     total_point = point_plus+point_negative
     point_item = RedeemItem.objects.get(id=item_id).point
 
-    if total_point>point_item:
+    if total_point>=point_item:
         return JsonResponse({'msg': "pass_check"})
     else:
         return JsonResponse({'msg':'fail_check'})
@@ -211,7 +211,7 @@ def buy_dataset(request):
         total_user_point = positive_point + negative_point
 
         print(form_selling_point)
-        if total_user_point > form_selling_point:
+        if total_user_point >= form_selling_point:
             transaction = PointTransaction(
                 user_id = request.user,
                 point = (-1) * form_selling_point,
