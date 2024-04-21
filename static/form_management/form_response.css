@@ -43,7 +43,7 @@
         & .download-data {
             background-color: var(--card-trans-bg);
             border-radius: .5rem;
-            width: 3.5rem;
+            min-width: 3.75rem;
             font-size: 1.5rem;
             cursor: pointer;
         }
