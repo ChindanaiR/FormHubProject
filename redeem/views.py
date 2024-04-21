@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db.models import Q, Sum
-from form_management.models import Form
 from .models import *
 
 
@@ -185,27 +184,47 @@ def buy_dataset(request):
 
         print(data["formId"])
         form = Form.objects.get(pk = data["formId"])
-        response_num = FormResponse.objects.filter(form = form).count()
+
+        # Get the point that need to be used
+        points = Point.objects.filter(context = "SEL")
+        response_count = FormResponse.objects.filter(form = form).count()
+        form_selling_point = [point for point in points if point.lower_bound <= response_count <= point.upper_bound]
+        form_selling_point = form_selling_point[0].point if form_selling_point else 0 # make sure that the question number in the boundary, or not less than zero
+
+        # Calc total user point
+        user = request.user
+        positive_point = PointTransaction.objects.filter(user_id=user).aggregate(total_points=Sum('point'))['total_points']
+        negative_point = RedeemTransaction.objects.filter(user_id=user).aggregate(total_points=Sum('point'))['total_points']
+
+        if not(positive_point):
+            positive_point = 0
+
+        if not(negative_point):
+            negative_point = 0
         
-        point = 0
-        if response_num >= 5:
-            point = 200
-        elif response_num >= 3:
-            point = 100
+        total_user_point = positive_point + negative_point
+
+        print(form_selling_point)
+        if total_user_point > form_selling_point:
+            transaction = PointTransaction(
+                user_id = request.user,
+                point = (-1) * form_selling_point,
+                form_id = form
+            )
+            transaction.save()
+
+            return JsonResponse({
+                "msg": "Conglatulations! You has just successfully redeemed! Enjoy 🥳",
+                "success": True
+            }, status = 201)
         else:
-            point = 50
-
-        transaction = PointTransaction(
-            user_id = request.user,
-            point = (-1) * point,
-            form_id = form
-        )
-        transaction.save()
-
-        return JsonResponse({
-            'msg': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳',
-            'success': True
-        }, status = 201)
+            return JsonResponse({
+                "msg": "You don't have enough point to get this",
+                "success": False
+            })
 
 
-    return JsonResponse({ "msg": "POST request is required"})
+    return JsonResponse({
+        "msg": "POST request is required",
+        "success": False
+    })

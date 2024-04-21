@@ -85,12 +85,21 @@ def save_response(request):
 		if response.exists():
 			return JsonResponse({"error": "You have already answered this form."}, status = 403)
 		
+		# Save the response
 		form_response = FormResponse(
 			form = form,
 			responder = request.user,
 			response = data["response"],
 		)
 		form_response.save()
+
+		# Record the point
+		point_tracsaction = PointTransaction(
+			point = form.form_point.point,
+			form_id = form,
+			user_id = request.user,
+		)
+		point_tracsaction.save()
 
 		return JsonResponse({"msg": "Your response has been saved successfully."}, status = 200)
 	
