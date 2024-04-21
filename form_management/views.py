@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db import IntegrityError
+from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import os
 
+from userprofile.models import PointTransaction
 from .models import *
 
 @login_required
@@ -29,9 +31,13 @@ def my_forms(request):
 def form_response(request, form_id):
 
     form = Form.objects.get(pk = form_id)
+    user_bought_list = PointTransaction.objects.filter(form_id = form, user_id = request.user, point__lt = 0)
+    print("yeeeeeeeeeeeeeeeeeeeeeeeeee")
+    print(user_bought_list.exists())
 
     if request.user.username != form.owner.username:
-        return HttpResponseRedirect(f"/form/{form_id}")
+        if not user_bought_list.exists():
+            return HttpResponseRedirect(f"/form/{form_id}")
 
     if request.method == "POST":
         action = request.POST["action"]
