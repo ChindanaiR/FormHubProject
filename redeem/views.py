@@ -147,8 +147,14 @@ def redeem(request, redeem_id):
 
 def preview_page(request, dataset_id):
 
-    # Get responses
     form = Form.objects.get(pk = dataset_id)
+
+    # Check if user already buy this dataset
+    is_bought = PointTransaction.objects.filter(user_id = request.user, form_id = form, point__lt = 0)
+    if is_bought.exists():
+        return HttpResponseRedirect("/")
+
+    # Get responses
     form_responses = FormResponse.objects.filter(form = form)[:5]
     questions = [section["question"] for section in form.design]
 

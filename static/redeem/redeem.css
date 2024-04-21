@@ -87,3 +87,8 @@
     font-size: 1rem;
     font-weight: bold;
 }
+
+.unable-to-buy {
+    background-color: #b1b1b1;
+    color: black;
+}
