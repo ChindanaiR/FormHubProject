@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 import json
 import os
 
@@ -29,7 +30,7 @@ def index(request):
         rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
 
     # Bought Datasets
-    dataset_transaction = PointTransaction.objects.filter(user_id=user, point__lt = 0)
+    dataset_transaction = [item.form_id.id for item in PointTransaction.objects.filter(Q(user_id=user) & Q(point__lt = 0))]
     user_datasets = Form.objects.filter(id__in = dataset_transaction)
 
     return render(request, "userprofile/index.html", {
