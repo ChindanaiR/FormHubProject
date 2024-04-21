@@ -36,7 +36,6 @@ def form_answering(request, form_id):
 
 # ================================= API =================================
 
-import time
 @login_required
 @csrf_exempt
 @api_view(["GET"])
@@ -47,6 +46,10 @@ def get_form(request, form_id):
 		try:
 			form = Form.objects.get(pk = form_id)
 
+			# Ensure that the form owner cannot answer their form.
+			if form.owner == request.user:
+				return JsonResponse({"error": "You cannot answer your own form"}, status = 403)
+			
 			# Check if the form is close or not
 			if not form.is_open:
 				return JsonResponse({"error": "This form has been closed by the owner."}, status = 403)
@@ -55,6 +58,7 @@ def get_form(request, form_id):
 			response = FormResponse.objects.filter(responder = request.user, form = form)
 			if response.exists():
 				return JsonResponse({"error": "You have already answered this form."}, status = 403)
+			
 
 
 			print(form)
