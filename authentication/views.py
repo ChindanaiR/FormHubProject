@@ -58,11 +58,33 @@ def register(request):
         # Ensure password matches confirmation
         if password != confirmation:
             return render(request, "authentication/register.html", {
-                "message": "Passwords must match."
+                "error": "Passwords must match.",
+                "data": {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "username": username,
+                    "email": email,
+                    "student_id": student_id,
+                    "password": password,
+                }
             })
 
         # Attempt to create new user
         try:
+            if User.objects.filter(email = email).exists():
+                print("YEEEEEEEEEEEEEE")
+                return render(request, "authentication/register.html", {
+                    "error": "Email is already taken.",
+                    "data": {
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "username": username,
+                        "email": email,
+                        "student_id": student_id,
+                        "password": password,
+                    }
+                })
+
             user = User.objects.create_user(
                 first_name = first_name,
                 last_name = last_name,
@@ -75,17 +97,19 @@ def register(request):
         except IntegrityError as e:
             print(e)
             return render(request, "authentication/register.html", {
-                "message": "Email address already taken.",
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "student_id": student_id,
-                "password": password,
+                "error": "Username is already taken.",
+                "data": {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "username": username,
+                    "email": email,
+                    "student_id": student_id,
+                    "password": password,
+                }
             })
-        finally:
-            login(request, user)
-            return HttpResponseRedirect("/")
+        
+        login(request, user)
+        return HttpResponseRedirect("/")
     else:
         # check if the user is already authenticated
         if request.user.is_authenticated:

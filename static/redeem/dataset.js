@@ -1,7 +1,7 @@
 
 
 const buyDataset = (formId) => {
-    $("#modal").modal("toggle")
+    $("#modal").modal("hide")
     fetch("buy_dataset/", {
         method: "POST",
         body: JSON.stringify({
@@ -12,6 +12,8 @@ const buyDataset = (formId) => {
     .then(data => {
         if (data.success) {
             window.location.assign(`/manage/responses/${formId}`)
+        } else {
+            alert("You better not do this action.")
         }
     })
 }

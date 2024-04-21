@@ -42,11 +42,11 @@ function validatePassword() {
     console.log(enterpw)
     console.log(confirmpw)
 
-    if (enterpw !== confirmpw) {
-        alert("Passwords do not match!");
-        return false;
-      } else {
-        document.querySelector('form').submit()
-        return true;
-    }
+    // if (enterpw !== confirmpw) {
+    //     alert("Passwords do not match!");
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+      document.querySelector('form').submit()
 }

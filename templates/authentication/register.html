@@ -17,33 +17,36 @@
         </div>
         <div class="col-4 login-form">
 
-            <form action="{% url 'register' %}" method="post">
+            <form action="{% url 'register' %}" method="post" class="d-flex flex-column">
                 {% csrf_token %}
 
                 <h2 class="m-2"><strong>Register</strong></h2>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="text" id="fname" name="fname" placeholder="First Name" required>
+                    <input class="form-control" type="text" id="fname" name="fname" placeholder="First Name" value="{{ data.first_name }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="text" name="lname" placeholder="Last Name" required>
+                    <input class="form-control" type="text" name="lname" placeholder="Last Name" value="{{ data.last_name }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="text" name="acctname" placeholder="Account Name" required>
+                    <input class="form-control" type="text" name="acctname" placeholder="Account Name" value="{{ data.username }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="email" name="email" placeholder="Email Address" required>
+                    <input class="form-control" type="email" name="email" placeholder="Email Address"  value="{{ data.email }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="integer" name="student_id" placeholder="Student ID" maxlength="10">
+                    <input class="form-control" type="integer" name="student_id" placeholder="Student ID" maxlength="10" value="{{ data.student_id }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Password" value="{{ data.password }}" required>
                 </div>
                 <div class="m-2 form-group">
-                    <input class="form-control" type="password" name="confirmation" id="confirmation" placeholder="Confirm Password" required>
+                    <input class="form-control" type="password" name="confirmation" id="confirmation" placeholder="Confirm Password"required>
+                </div>
+                <label for="error" class="text-danger p-2" {% if not error %} hidden {% endif %}>**{{ error }}</label>
+                <div class="btn-container">
+                    <button class="m-2 btn btn-primary " id="submit" value="Register" onclick="validatePassword()">Register</button>
                 </div>
             </form>
-            <button class="m-2 btn btn-primary" id="submit" value="Register" onclick="validatePassword()">Register</button>
             <p class="m-2" style="color: gray;">Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
         </div>
     </div>
