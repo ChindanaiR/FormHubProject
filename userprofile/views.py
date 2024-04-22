@@ -49,12 +49,15 @@ def profile(request, user_id):
     if user_id:
         user = User.objects.get(pk = user_id)
 
-        if user_id == request.user.id:
-            user_forms = Form.objects.filter(owner = user)
+        if request.user.is_authenticated:
+            if user_id == request.user.id:
+                user_forms = Form.objects.filter(owner = user)
+            else:
+                is_already_answered_form = FormResponse.objects.filter(responder = request.user).values("form_id").distinct()
+                exclude_form_list = [item["form_id"] for item in is_already_answered_form]
+                user_forms = Form.objects.filter(owner = user, is_open = True).exclude(id__in=exclude_form_list)
         else:
-            is_already_answered_form = FormResponse.objects.filter(responder = request.user).values("form_id").distinct()
-            exclude_form_list = [item["form_id"] for item in is_already_answered_form]
-            user_forms = Form.objects.filter(owner = user, is_open = True).exclude(id__in=exclude_form_list)
+            user_forms = Form.objects.filter(owner = user, is_open = True)
 
         # Ranking
         responses = PointTransaction.objects.filter(user_id = user)

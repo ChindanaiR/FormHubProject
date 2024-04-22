@@ -34,6 +34,22 @@ def form_answering(request, form_id):
 	return render(request, "answering/form.html", {})
 
 
+
+def dataset(request):
+
+	forms = Form.objects.filter(is_sale = True)
+	
+	for form in forms:
+		print(form.form_pic)
+
+	return render(request, "answering/dataset.html", 
+	{
+		"title": "All Datasets",
+		"forms": forms,
+	})
+
+
+
 # ================================= API =================================
 
 @login_required

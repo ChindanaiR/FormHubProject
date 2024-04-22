@@ -9,7 +9,7 @@ import json
 from django.db.models import Q, Sum
 from .models import *
 
-
+@login_required
 def index(request):
     user = request.user
 
@@ -149,27 +149,29 @@ def preview_page(request, dataset_id):
 
     form = Form.objects.get(pk = dataset_id)
 
-    # Check if user already buy this dataset
-    is_bought = PointTransaction.objects.filter(user_id = request.user, form_id = form, point__lt = 0)
-    if is_bought.exists():
-        return HttpResponseRedirect("/")
-
     # Get responses
     form_responses = FormResponse.objects.filter(form = form)[:5]
     questions = [section["question"] for section in form.design]
+    total_point = 0
 
-    # Get total points
-    user_id = request.user.id
-    point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
-    point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+    if request.user.is_authenticated:
+        # Check if user already buy this dataset
+        is_bought = PointTransaction.objects.filter(user_id = request.user, form_id = form, point__lt = 0)
+        if is_bought.exists():
+            return HttpResponseRedirect("/")
 
-    if not(point_plus):
-        point_plus = 0
+        # Get total points
+        user_id = request.user.id
+        point_plus = PointTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
+        point_negative = RedeemTransaction.objects.filter(user_id_id=user_id).aggregate(total_points=Sum('point'))['total_points']
 
-    if not(point_negative):
-        point_negative = 0
+        if not(point_plus):
+            point_plus = 0
 
-    total_point = point_plus+point_negative
+        if not(point_negative):
+            point_negative = 0
+
+        total_point = point_plus+point_negative
 
     return render(request, "redeem/dataset.html", {
         "form_name": form.form_name,
