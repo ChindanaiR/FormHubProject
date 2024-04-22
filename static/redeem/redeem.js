@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             }
             else {
-                alert(`Your point is not`)
+                alert(`Your point is not enough`)
             }
             });      
             }
