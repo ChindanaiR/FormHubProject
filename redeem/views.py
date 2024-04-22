@@ -150,7 +150,8 @@ def preview_page(request, dataset_id):
     form = Form.objects.get(pk = dataset_id)
 
     # Get responses
-    form_responses = FormResponse.objects.filter(form = form)[:5]
+    form_responses = FormResponse.objects.filter(form = form)
+    sample_responses = form_responses[:5]
     questions = [section["question"] for section in form.design]
     total_point = 0
 
@@ -176,10 +177,10 @@ def preview_page(request, dataset_id):
     return render(request, "redeem/dataset.html", {
         "form_name": form.form_name,
         "questions": questions, 
-        "records": form_responses,
+        "records": sample_responses,
         "form": form,
         "user_point": total_point,
-        
+        "all_responses": form_responses.count()
     })
 
 @csrf_exempt

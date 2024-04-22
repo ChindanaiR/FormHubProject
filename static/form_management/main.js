@@ -221,7 +221,7 @@ const dropdownHandler = (elem) => {
         <ol class="choices my-3">
             <li class="my-1"><input type="text" class="choice"></li>
         </ol>
-        <button class="add-choices">Add choices</button>
+        <button class="add-choices btn btn-secondary">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
@@ -235,11 +235,11 @@ const checkboxHandler = (elem) => {
         <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
         <div class="choices my-3">
             <div class="my-1">
-                <input type="checkbox" disabled>
+                <input type="checkbox" class="form-check-input" disabled>
                 <input type="text" class="choice">
             </div>
         </div>
-        <button class="add-choices">Add choices</button>
+        <button class="add-choices btn btn-secondary">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
@@ -253,11 +253,11 @@ const radioHandler = (elem) => {
         <input type="text" class="question form-control mt-3" placeholder="Untitled Question">
         <div class="choices my-3">
             <div class="my-1">
-                <input type="radio" disabled>
+                <input type="radio" class="form-check-input" disabled>
                 <input type="text" class="choice">
             </div>
         </div>
-        <button class="add-choices">Add choices</button>
+        <button class="add-choices btn btn-secondary">Add choices</button>
     `
     displayDiv.querySelector(".add-choices").onclick = () => addChoices(elem)
 }
@@ -309,21 +309,25 @@ const addChoices = (elem) => {
     if (type === "dropdown") {
         choice = document.createElement("li")
         choice.classList.add("my-1")
-        choice.innerHTML = `<input type="text" class="choice">`
+        choice.innerHTML = `<input type="text" class="choice"> <i class="delete" onclick="deleteChoice(this)">&times;</i>`
         elem.parentNode.querySelector("ol").appendChild(choice)
     } else if (type === "checkbox") {
         choice = document.createElement("div")
         choice.classList.add("my-1")
-        choice.innerHTML = `<input type="checkbox" disabled>
-                            <input type="text" class="choice">`
+        choice.innerHTML = `<input type="checkbox" class="form-check-input" disabled>
+                            <input type="text" class="choice"> <i class="delete" onclick="deleteChoice(this)">&times;</i>`
         elem.parentNode.querySelector("div.choices").appendChild(choice)
     } else if (type === "radio") {
         choice = document.createElement("div")
         choice.classList.add("my-1")
-        choice.innerHTML = `<input type="radio" disabled>
-                            <input type="text" class="choice">`
+        choice.innerHTML = `<input type="radio" class="form-check-input" disabled>
+                            <input type="text" class="choice"> <i class="delete" onclick="deleteChoice(this)">&times;</i>`
         elem.parentNode.querySelector("div.choices").appendChild(choice)
     }
+}
+
+const deleteChoice = (elem) => {
+    elem.parentNode.remove();
 }
 
 const uploadFile = (formId) => {

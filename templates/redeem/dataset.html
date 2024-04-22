@@ -44,8 +44,9 @@
                 </table>
             </div>
         </div>
+        <label for="row-count" class="fw-bold p-2">{{ all_responses }} {% if all_responses > 1 %}rows{% else %}row{% endif %}</label>
     </div>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and form.owner != user %}
         <div class="d-flex justify-content-end">
             <button class="btn btn-primary buy-btn mt-2" onclick="buyingConfirmation('{{ form.id }}')" {% if user_point < form.form_selling_point.point %} disabled {% endif %}>
                 BUY

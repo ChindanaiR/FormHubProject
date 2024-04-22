@@ -38,9 +38,6 @@ def form_answering(request, form_id):
 def dataset(request):
 
 	forms = Form.objects.filter(is_sale = True)
-	
-	for form in forms:
-		print(form.form_pic)
 
 	return render(request, "answering/dataset.html", 
 	{
