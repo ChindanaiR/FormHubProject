@@ -51,19 +51,12 @@ editButtons.addEventListener('click', function() {
               body: JSON.stringify({
                   email: newmail
               })
-            }).then(response => {
-              if (response.ok) {
-                  return response.json();
-              }
-              throw new Error('Email already exists');
-          }).then(data => {
-              if (data.error) {
-                  alert(data.error);
-              } else {
-                  const nameElement = document.querySelector('#email');
-                  nameElement.textContent = `Email: ${newmail}`;
-              }
-          })
+            }).then(response => response.json())
+            .then(data => {
+              alert(data.error)
+            })
+        
+          
       }
   });
 

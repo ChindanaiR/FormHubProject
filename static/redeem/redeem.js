@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => { console.log(data.msg)
                     
             if(data.msg==='pass_check'){  
-                var confirmation = confirm("คุณต้องการแลกของรางวัลนี้ใช่หรือไม่?");
+                var confirmation = confirm("Do you want to redeem?");
                 if (confirmation) {
-                    alert("แลกของรางวัลสำเร็จ!")
+                    alert("Redeem success!")
                     fetch(`redeem/${redeemBtn.name}`)
                     .then(response => response.json())
                     .then(data => {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else {
-                alert(`ไอโง่`)
+                alert(`Your point is not enough`)
             }
             });      
             }

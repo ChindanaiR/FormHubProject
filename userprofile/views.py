@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 import json
 import os
+import re
+
 
 from .models import *
 
@@ -106,6 +108,11 @@ def update_userinfo(request):
         # ตรวจสอบว่ามี email ซ้ำกันหรือไม่ 
         if new_email and User.objects.exclude(id=request.user.id).filter(email=new_email).exists():
             return JsonResponse({'error': 'Email already exists'}, status=400)
+        
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(pattern, new_email):
+            return JsonResponse({'error': 'Invalid email'}, status=400)
+
 
         # อัปเดตข้อมูล
         user = request.user
