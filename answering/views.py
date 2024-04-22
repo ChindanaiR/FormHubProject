@@ -31,7 +31,8 @@ def index(request):
 
 @login_required
 def form_answering(request, form_id):
-	return render(request, "answering/form.html", {})
+	form = Form.objects.get(pk = form_id)
+	return render(request, "answering/form.html", { "form": form })
 
 
 
@@ -59,9 +60,9 @@ def get_form(request, form_id):
 		try:
 			form = Form.objects.get(pk = form_id)
 
-			# Ensure that the form owner cannot answer their form.
-			if form.owner == request.user:
-				return JsonResponse({"error": "You cannot answer your own form"}, status = 403)
+			# # Ensure that the form owner cannot answer their form.
+			# if form.owner == request.user:
+			# 	return JsonResponse({"error": "You cannot answer your own form"}, status = 403)
 			
 			# Check if the form is close or not
 			if not form.is_open:
@@ -95,6 +96,9 @@ def save_response(request):
 
 		data = request.data
 		form = Form.objects.get(pk = data["formId"])
+
+		if form.owner == request.user:
+			return JsonResponse({"error": "The user cannot answer their own form."}, status = 403)
 
 		# Check if the user has already answered the form
 		response = FormResponse.objects.filter(responder = request.user, form = form)
