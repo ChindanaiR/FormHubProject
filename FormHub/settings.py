@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'userprofile',
     'answering',
     'form_management',
-    'leaderboard',
     'redeem',
 ]
 
