@@ -7,7 +7,7 @@
 
     & .form {
         max-width: 16rem;
-        height: 21rem;
+        height: 20rem;
         cursor: pointer;
         background-color: var(--main-bg);
         border-radius: .5rem;
@@ -50,7 +50,7 @@
     
             & .description {
                 display: -webkit-box;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 5;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }

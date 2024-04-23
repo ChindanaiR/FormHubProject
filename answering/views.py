@@ -26,7 +26,7 @@ def index(request):
 
 	return render(request, "answering/index.html", {
 		"title": "All Active Forms",
-		"forms": forms.order_by("creation_timestamp").reverse(),
+		"forms": forms,
 	})
 
 @login_required

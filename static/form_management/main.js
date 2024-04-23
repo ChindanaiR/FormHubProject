@@ -15,19 +15,16 @@ document.querySelector(".add-section").onclick = () => {
     section.classList.add("card", "p-3", "my-3")
     section.setAttribute("data-section", sectionContainer.childElementCount + 1)
     section.innerHTML = `
-        <div class="d-flex align-items-center">
-            <select name="section-type" class="form-select" onchange="selectFormType(this)">
-                <option value="" disabled selected>Select Section Type</option>
-                <option value="checkbox">Checkbox</option>
-                <option value="dropdown">Dropdown</option>
-                <option value="radio">Radio</option>
-                <option value="short">Short text</option>
-                <option value="long">Long Text</option>
-                <option value="date">Date</option>
-                <option value="time">Time</option>
-            </select>
-            <i class="delete p-2" style="font-size=2rem;">&times;</i>
-        </div>
+        <select name="section-type" class="form-select" onchange="selectFormType(this)">
+            <option value="" disabled selected>Select Section Type</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="dropdown">Dropdown</option>
+            <option value="radio">Radio</option>
+            <option value="short">Short text</option>
+            <option value="long">Long Text</option>
+            <option value="date">Date</option>
+            <option value="time">Time</option>
+        </select>
         <div class="display"></div>
     `
     sectionContainer.appendChild(section)
