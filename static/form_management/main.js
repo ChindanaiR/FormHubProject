@@ -9,7 +9,6 @@ var errorDict = {
 // ================================= Form Creation =================================
 
 document.querySelector(".add-section").onclick = () => {
-    console.log("ADD")
     const sectionContainer = document.querySelector(".design-container");
     const section = document.createElement("section")
     section.classList.add("card", "p-3", "my-3")
@@ -41,7 +40,6 @@ document.querySelector(".save").onclick = () => {
         confirmBtn.onclick = () => publishForm();
         $("#modal").modal("toggle");
     } else {
-        console.log("Something went wrong")
         document.querySelector(".modal-title").innerHTML = "Something went wrong.";
         document.querySelector(".modal-body").innerHTML = `<ul class="errors"></ul>`
         confirmBtn.classList.add("hidden")

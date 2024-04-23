@@ -39,14 +39,11 @@ function validatePassword() {
     const enterpw = document.querySelector('#password').value;
     const confirmpw = document.querySelector('#confirmation').value;
 
-    console.log(enterpw)
-    console.log(confirmpw)
-
-    // if (enterpw !== confirmpw) {
-    //     alert("Passwords do not match!");
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-      document.querySelector('form').submit()
+    if (enterpw !== confirmpw) {
+      alert("Passwords do not match!");
+      return false;
+    } else {
+      return true;
+    }
+    document.querySelector('form').submit()
 }

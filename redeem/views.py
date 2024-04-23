@@ -41,11 +41,6 @@ def index(request):
     else:
         rank = 'https://icons.iconarchive.com/icons/iconarchive/badge-trophy/256/Badge-Trophy-Rubin-2-icon.png'
 
-        # # Code below doesnt work since the prizes returns Null so need to do the less efficient way
-        # prizes = RedeemTransaction.objects.filter(
-        #     Q(redeem__redeem_code = 'PRZ')
-        # ).values_list('redeem_id', flat=True)
-        # print(prizes)
     
     user_pic = User.objects.get(pk = request.user.id)
 
@@ -71,8 +66,6 @@ def index(request):
     # Form_sale
     bought_dataset = PointTransaction.objects.filter(Q(user_id = user) & Q(point__lt=0)).values_list("form_id_id", flat=True)
     form_sale = Form.objects.filter(is_sale=True, is_open=False).exclude(Q(owner=user) | Q(id__in=bought_dataset))
-
-    # print(form_sale)
 
     return render(request, "redeem/index.html", {
         # "remaining": remaining,
@@ -135,9 +128,6 @@ def redeem(request, redeem_id):
         redeem = RedeemItem.objects.get(id = redeem_id)
     )
     transaction.save()
-
-
-    print(f"{request.user} Redeem {RedeemItem.objects.get(id = redeem_id).description}")
     
     return JsonResponse({
         'alert': 'Conglatulations! You has just successfully redeemed! Enjoy 🥳'
@@ -187,11 +177,9 @@ def preview_page(request, dataset_id):
 @login_required
 def buy_dataset(request):
     
-    print("CALLED")
     if request.method == "POST":
         data = json.loads(request.body)
 
-        print(data["formId"])
         form = Form.objects.get(pk = data["formId"])
 
         # Get the point that need to be used
@@ -213,7 +201,6 @@ def buy_dataset(request):
         
         total_user_point = positive_point + negative_point
 
-        print(form_selling_point)
         if total_user_point >= form_selling_point:
             transaction = PointTransaction(
                 user_id = request.user,

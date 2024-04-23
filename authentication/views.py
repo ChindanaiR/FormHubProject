@@ -72,7 +72,6 @@ def register(request):
         # Attempt to create new user
         try:
             if User.objects.filter(email = email).exists():
-                print("YEEEEEEEEEEEEEE")
                 return render(request, "authentication/register.html", {
                     "error": "Email is already taken.",
                     "data": {

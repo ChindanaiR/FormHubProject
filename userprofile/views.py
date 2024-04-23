@@ -133,18 +133,15 @@ def update_userinfo(request):
 
 @csrf_exempt
 def upload_pic(request):
-    print("=" * 100) 
     if request.method == "POST": 
         try:
             image_update = request.FILES.get("img")
-            print(image_update)
             if not image_update:
                 return JsonResponse({"msg": "No picture is sent."})
 
             # ระบุตำแหน่งของไฟล์ที่ต้องการลบ
             file_path = f"{request.user.profile_img}" 
             default_path = "static/userprofile/imgs/default.jpg"
-            print(file_path)
             
             if os.path.exists(file_path) and file_path != default_path:
             # ลบไฟล์

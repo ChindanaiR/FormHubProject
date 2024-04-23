@@ -49,7 +49,6 @@ if (downloadData) {
                 row.push(cols[j].innerText);
             data.push(row);
         }
-        console.log(data)
     
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.aoa_to_sheet(data);

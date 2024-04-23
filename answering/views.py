@@ -73,9 +73,6 @@ def get_form(request, form_id):
 			if response.exists():
 				return JsonResponse({"error": "You have already answered this form."}, status = 403)
 			
-
-
-			print(form)
 			return JsonResponse({
 				"formName": form.form_name,
 				"description": form.description,
@@ -102,7 +99,6 @@ def save_response(request):
 
 		# Check if the user has already answered the form
 		response = FormResponse.objects.filter(responder = request.user, form = form)
-		print(f"YEEEEEEEEEEEEEEEEEEEEE {response.exists()}")
 		if response.exists():
 			return JsonResponse({"error": "You have already answered this form."}, status = 403)
 		

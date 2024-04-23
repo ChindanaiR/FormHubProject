@@ -22,8 +22,6 @@ def form_response(request, form_id):
 
     form = Form.objects.get(pk = form_id)
     user_bought_list = PointTransaction.objects.filter(form_id = form, user_id = request.user, point__lt = 0)
-    print("yeeeeeeeeeeeeeeeeeeeeeeeeee")
-    print(user_bought_list.exists())
 
     if request.user.username != form.owner.username:
         if not user_bought_list.exists():
@@ -76,11 +74,9 @@ def save_form(request):
     if request.method == "POST":
         data = json.loads(request.body)
         num_of_questions = len(data["design"])
-        print(num_of_questions)
 
         points = Point.objects.filter(context = "ANS")
         point = [point for point in points if point.lower_bound <= num_of_questions <= point.upper_bound][0]
-        print(point.id)
 
         form = Form(
             form_name = data["formName"],
@@ -100,7 +96,6 @@ def save_form(request):
 
 @csrf_exempt
 def upload_pic(request):
-    print("=" * 100)    
     if request.method == "POST": 
 
         image_update = request.FILES.get("img")
