@@ -36,6 +36,5 @@ urlpatterns = [
     path("account/", include("userprofile.urls")),
     path("manage/", include("form_management.urls")),
     path("redeem/", include("redeem.urls")),
-    path("leaderboard/", include("leaderboard.urls")),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
