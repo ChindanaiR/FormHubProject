@@ -96,7 +96,7 @@ def create_normal_users():
             User.objects.create_user(
                 first_name = "John",
                 last_name = "Doe",
-                username = "John D.",
+                username = "john",
                 email = "john@mail.com",
                 student_id = "6441111126",
                 password = "123",
@@ -104,7 +104,7 @@ def create_normal_users():
             User.objects.create_user(
                 first_name = "Jimmy",
                 last_name = "Doe",
-                username = "Jimmy D.",
+                username = "jimmy",
                 email = "jimmy@mail.com",
                 student_id = "6442222226",
                 password = "123",
@@ -112,7 +112,7 @@ def create_normal_users():
             User.objects.create_user(
                 first_name = "Jane",
                 last_name = "Doe",
-                username = "Jane D.",
+                username = "jane",
                 email = "jane@mail.com",
                 student_id = "6443333326",
                 password = "123",
