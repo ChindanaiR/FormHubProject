@@ -218,7 +218,7 @@ def create_forms():
                     }
                 ],
                 owner = User.objects.get(pk = 2),
-                form_point = Point.objects.get(context = "ANS", form_size = "S"),
+                form_point = Point.objects.get(context = "ANS", form_size = "M"),
                 is_open = True,
             )
             Form.objects.create(
@@ -254,7 +254,7 @@ def create_forms():
                     }
                 ],
                 owner = User.objects.get(pk = 2),
-                form_point = Point.objects.get(context = "ANS", form_size = "S"),
+                form_point = Point.objects.get(context = "ANS", form_size = "M"),
                 is_open = True,
             )
             Form.objects.create(
@@ -352,7 +352,7 @@ def create_forms():
                     }
                 ],
                 owner = User.objects.get(pk = 3),
-                form_point = Point.objects.get(context = "ANS", form_size = "S"),
+                form_point = Point.objects.get(context = "ANS", form_size = "L"),
                 is_open = True,
             )
             Form.objects.create(
@@ -433,7 +433,7 @@ def create_forms():
                     }
                 ],
                 owner = User.objects.get(pk = 3),
-                form_point = Point.objects.get(context = "ANS", form_size = "S"),
+                form_point = Point.objects.get(context = "ANS", form_size = "L"),
                 is_open = True,
             )
             Form.objects.create(
@@ -481,7 +481,7 @@ def create_forms():
                     }
                 ],
                 owner = User.objects.get(pk = 1),
-                form_point = Point.objects.get(context = "ANS", form_size = "S"),
+                form_point = Point.objects.get(context = "ANS", form_size = "M"),
                 is_open = True,
             )
             print("[+] Forms has been created.")
