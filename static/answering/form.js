@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // =========================================== Render the form ===========================================
 
 const dropdownRender = (parent, section, design) => {
-    console.log("dropdown detected");
 
     // set initial layout
     section.innerHTML = `
@@ -31,7 +30,6 @@ const dropdownRender = (parent, section, design) => {
     
 }
 const checkboxRender = (parent, section, design) => {
-    console.log("checkbox detected");
 
     // set initial layout
     section.innerHTML = `
@@ -60,7 +58,6 @@ const checkboxRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const radioRender = (parent, section, design) => {
-    console.log("radio detected");
 
     // set initial layout
     section.innerHTML = `
@@ -90,7 +87,6 @@ const radioRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const shortTextInputRender = (parent, section, design) => {
-    console.log("short txt detected");
     section.innerHTML = `
         <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="my-2">
@@ -100,7 +96,6 @@ const shortTextInputRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const longTextInputRender = (parent, section, design) => {
-    console.log("long txt detected");
     section.innerHTML = `
         <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="my-2">
@@ -110,7 +105,6 @@ const longTextInputRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const fileInputRender = (parent, section, design) => {
-    console.log("file detected");
     section.innerHTML = `
         <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <div class="input-group my-3">
@@ -120,7 +114,6 @@ const fileInputRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const dateRender = (parent, section, design) => {
-    console.log("file detected");
     section.innerHTML = `
         <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <input type="date" class="answer my-2 form-control" />
@@ -128,7 +121,6 @@ const dateRender = (parent, section, design) => {
     parent.appendChild(section);
 }
 const timeRender = (parent, section, design) => {
-    console.log("file detected");
     section.innerHTML = `
         <h6 class="question" data-question="${design.question}">${design.section}. ${design.question}</h6>
         <input type="time" class="answer my-2 form-control" />
@@ -232,7 +224,6 @@ const saveResponse = () => {
             const question = section.querySelector(".question").dataset.question;
             const sectionNumber = section.dataset.sectionnum;
             if (formType === "dropdown") {
-                console.log("DD")
                 responses.push({
                     section: sectionNumber,
                     type: formType,
@@ -240,7 +231,6 @@ const saveResponse = () => {
                     response: section.querySelector("select").value,
                 })
             } else if (formType === "checkbox") {
-                console.log("CB");
                 checkedEntry = [];
                 section.querySelectorAll(".checkbox").forEach(item => {
                     checkbox = item.querySelector("input");
@@ -253,7 +243,6 @@ const saveResponse = () => {
                     response: checkedEntry,
                 });
             } else if (formType === "radio") {
-                console.log("RD");
                 section.querySelectorAll(".radio").forEach(item => {
                     radio = item.querySelector("input");
                     if (radio.checked) checkedEntry = radio.value;
@@ -265,7 +254,6 @@ const saveResponse = () => {
                     response: checkedEntry,
                 });
             } else if (["short", "long", "date", "time"].includes(formType)) {
-                console.log("SHORT");
                 content = section.querySelector(".answer").value;
                 responses.push({
                     section: sectionNumber,
@@ -275,7 +263,7 @@ const saveResponse = () => {
                 });
             }
         })
-        console.log(responses);
+
         const formId = window.location.href.split("/").at(-1)
         const csrfToken = getCookie("csrftoken");
         fetch("/save_response/", {

@@ -28,7 +28,7 @@ def create_point_range():
                 point = 10,
                 description = "Buying small form",
                 lower_bound = 1,
-                upper_bound = 3,
+                upper_bound = 1,
             )
             Point.objects.create(
                 form_size = "S",
@@ -43,8 +43,8 @@ def create_point_range():
                 context = "SEL",
                 point = 20,
                 description = "Buying medium form",
-                lower_bound = 4,
-                upper_bound = 7,
+                lower_bound = 2,
+                upper_bound = 2,
             )
             Point.objects.create(
                 form_size = "M",
@@ -59,7 +59,7 @@ def create_point_range():
                 context = "SEL",
                 point = 30,
                 description = "Buying large form",
-                lower_bound = 8,
+                lower_bound = 3,
                 upper_bound = 999,
             )
             Point.objects.create(
