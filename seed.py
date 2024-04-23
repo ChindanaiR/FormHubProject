@@ -28,7 +28,7 @@ def create_point_range():
                 point = 10,
                 description = "Buying small form",
                 lower_bound = 1,
-                upper_bound = 1,
+                upper_bound = 3,
             )
             Point.objects.create(
                 form_size = "S",
@@ -36,39 +36,39 @@ def create_point_range():
                 point = 10,
                 description = "Answering small form",
                 lower_bound = 1,
-                upper_bound = 1,
+                upper_bound = 3,
             )
             Point.objects.create(
                 form_size = "M",
                 context = "SEL",
                 point = 20,
                 description = "Buying medium form",
-                lower_bound = 2,
-                upper_bound = 2,
+                lower_bound = 4,
+                upper_bound = 7,
             )
             Point.objects.create(
                 form_size = "M",
                 context = "ANS",
                 point = 20,
                 description = "Answering medium form",
-                lower_bound = 2,
-                upper_bound = 2,
+                lower_bound = 4,
+                upper_bound = 7,
             )
             Point.objects.create(
                 form_size = "L",
                 context = "SEL",
                 point = 30,
                 description = "Buying large form",
-                lower_bound = 3,
-                upper_bound = 3,
+                lower_bound = 8,
+                upper_bound = 999,
             )
             Point.objects.create(
                 form_size = "L",
                 context = "ANS",
                 point = 30,
                 description = "Answering large form",
-                lower_bound = 3,
-                upper_bound = 3,
+                lower_bound = 8,
+                upper_bound = 999,
             )
             print("[+] Point table has been created.")
         except Exception as e:
