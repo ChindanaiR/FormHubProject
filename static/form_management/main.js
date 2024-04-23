@@ -63,10 +63,8 @@ const publishForm = () => {
     })
     .then(response => response.json())
     .then(response => {
-        console.log(response)
         if (response.msg === "Save successfuly") {
             const formId = response.formId
-            console.log(response)
             const uploaded = uploadFile(formId);
             if (!uploaded) {
                 document.querySelector(".modal-title").innerHTML = "Something went wrong.";
@@ -86,7 +84,6 @@ const publishForm = () => {
 
 
 const validateForm = () => {
-    console.log("VALIDATE!");
     const errLog = new Set();
     
     // Validate form name; form name is a must
@@ -132,7 +129,6 @@ const validateForm = () => {
                     choices.forEach(choice => {
                         if (choice.value) filledChoices++;
                     })
-                    console.log(filledChoices)
                     // check if the blank choices has been created and there are no filled choice, mean that there are zero choice for answering.
                     if (filledChoices === 0) {
                         errLog.add(5);

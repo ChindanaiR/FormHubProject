@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (redeemBtn) {
             redeemBtn.onclick = function () {
-                console.log(redeemBtn.name)
                 const remove = document.querySelector(`#find_id_${redeemBtn.name}`);
-                console.log(remove)
 
                 fetch('check_point/', {
                     method:"POST",
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     fetch(`redeem/${redeemBtn.name}`)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.alert);
                         show_point(); 
                         if (redeemBtn.value == 'CSH'){
                         }
